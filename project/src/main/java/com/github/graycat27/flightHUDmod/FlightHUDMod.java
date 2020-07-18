@@ -1,5 +1,6 @@
 package com.github.graycat27.flightHUDmod;
 
+import com.github.graycat27.flightHUDmod.Listener.PlayerActionListener;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -22,11 +23,18 @@ public class FlightHUDMod
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
+    public static FlightHUDGUIController guiController;
+
+    public static Logger getLogger(){
+        return LOGGER;
+    }
+
+    public static FlightHUDGUIController getGuiController(){
+        return guiController;
+    }
+
 
     public FlightHUDMod() {
-
-        //XXX fix
-
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -36,14 +44,16 @@ public class FlightHUDMod
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(PlayerActionListener::playerFall);
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event)
     {
-
-        LOGGER.info("Start Setup FlightHUD");
+       LOGGER.info("Start Setup FlightHUD");
+       guiController = new FlightHUDGUIController();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
