@@ -6,8 +6,11 @@ import net.minecraftforge.client.gui.*;
 public abstract class GuiComponent extends ForgeIngameGui implements IGuiComponent {
 
     //field
+    private boolean displayed = false;
 
-
+    public boolean isDisplayed(){
+        return displayed;
+    }
 
     //constructor
     public GuiComponent(Minecraft mc)
@@ -18,16 +21,28 @@ public abstract class GuiComponent extends ForgeIngameGui implements IGuiCompone
     //method
 
     @Override
-    public boolean show(){
+    public void show(){
+        if(displayed){
+            //nothing to do
+            return;
+        }
+
         //TODO makeThis
 
-        return false;
+        displayed = true;
     }
 
     @Override
-    public boolean hide() {
+    public void hide() {
+        if(!displayed){
+            //nothing to do
+            return;
+        }
+
         //TODO makeThis
 
-        return false;
+
+        displayed = false;
     }
+
 }

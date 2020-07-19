@@ -4,9 +4,12 @@ import net.minecraft.client.Minecraft;
 
 public class Height extends GuiComponent  {
 
-    Height(){
+    public Height(){
         super(Minecraft.getInstance());
     }
 
-
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException();
+    }
 }

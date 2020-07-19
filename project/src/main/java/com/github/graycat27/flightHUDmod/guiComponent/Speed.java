@@ -4,11 +4,14 @@ import net.minecraft.client.Minecraft;
 
 public class Speed extends GuiComponent {
 
-    Speed(){
+    public Speed(){
         super(Minecraft.getInstance());
     }
 
-
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException();
+    }
 
 
 }

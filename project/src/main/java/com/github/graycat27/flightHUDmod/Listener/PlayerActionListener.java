@@ -1,5 +1,6 @@
 package com.github.graycat27.flightHUDmod.Listener;
 
+import com.github.graycat27.flightHUDmod.guiComponent.Compass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
@@ -44,15 +45,21 @@ public class PlayerActionListener {
             FlightHUDMod.getLogger().debug("player is not flying with Elytra");
         }
 
+        if(player.isInWater() || player.isInLava()){
+            FlightHUDMod.getLogger().debug("player is in the water or lava");
+        }
         int flyingTicks = player.getTicksElytraFlying();
 
         if(flyingTicks % 4 == 0) {
 
             FlightHUDMod.getLogger().debug("player is flying for " + player.getTicksElytraFlying() + " ticks");
 
-//          FlightHUDGUIController controller = FlightHUDMod.getGuiController();
+            FlightHUDGUIController controller = FlightHUDMod.getGuiController();
 
-            player.sendMessage(new StringTextComponent("flying for " + player.getTicksElytraFlying() + " ticks"));
+            controller.showAllComponent();
+
+            controller.updateAllComponent();
+
         }
         //controller.showAllComponent();
     }

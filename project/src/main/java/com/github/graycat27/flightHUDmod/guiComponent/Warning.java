@@ -4,7 +4,12 @@ import net.minecraft.client.Minecraft;
 
 public class Warning extends GuiComponent {
 
-    Warning(){
+    public Warning(){
         super(Minecraft.getInstance());
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException();
     }
 }
