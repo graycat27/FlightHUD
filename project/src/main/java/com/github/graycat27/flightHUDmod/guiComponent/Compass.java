@@ -20,6 +20,8 @@ public class Compass extends GuiComponent {
     private final int WEST = 270;
     /** 未設定状態を示す定数値 */
     private final int UNSET = 0;
+    /** 1周を示す定数値 */
+    private final int ROUND = 360;
 
     /** direction - player facing
      * 0は未設定を意味する（北の場合は360） */
@@ -30,7 +32,7 @@ public class Compass extends GuiComponent {
      * @param dir 1-360 value
      * @throws IllegalArgumentException when param is not between 1-360 */
     private void setDirection(int dir){
-        if( dir <= 0 || 360 < dir){
+        if( dir <= UNSET || ROUND < dir){
             //must between 1 - 360 (not 0)
             throw new IllegalArgumentException("direction must in 1-360 but was "+ dir);
         }
@@ -73,10 +75,10 @@ public class Compass extends GuiComponent {
         /* playerYaw = SOUTH(=0)を基準に右回りを正として、回転した角度分増減する */
         float playerYaw = player.rotationYaw;
         while(playerYaw < SOUTH){
-            playerYaw += 360;
+            playerYaw += ROUND;
         }
-        int intFlightDirection = Math.round((playerYaw + SOUTH) % 360);
-        if(intFlightDirection == 0){
+        int intFlightDirection = Math.round((playerYaw + SOUTH) % ROUND);
+        if(intFlightDirection == UNSET){
             intFlightDirection = NORTH;
         }
 
