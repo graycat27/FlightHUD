@@ -21,7 +21,9 @@ public class FlightHUDGUIController {
             compass.show();
         }
 //        height.show();
-//        pitch.show();
+        if(!pitch.isDisplayed()){
+            pitch.show();
+        }
 //        speed.show();
 //        warning.show();
 
@@ -29,11 +31,12 @@ public class FlightHUDGUIController {
 
     public void updateAllComponent(){
         compass.update();
+        pitch.update();
     }
 
     public void hideAllComponent(){
         compass.hide();
-
+        pitch.hide();
 
     }
 
@@ -45,9 +48,10 @@ public class FlightHUDGUIController {
 //        if(height == null){
 //            height = new Height();
 //        }
-//        if(pitch == null){
-//            pitch = new Pitch();
-//        }
+        if(pitch == null){
+            pitch = new Pitch();
+            FlightHUDMod.getLogger().debug("pitch has created!");
+        }
 //        if(speed == null){
 //            speed = new Speed();
 //        }
