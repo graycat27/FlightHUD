@@ -1,6 +1,6 @@
 package com.github.graycat27.flightHUDmod.unit;
 
-public class Pitch {
+public class Pitch implements IUnit {
 
     public static final int LEVEL = 0;
 
@@ -24,6 +24,11 @@ public class Pitch {
 
     public int getPitch(){
         return pitch;
+    }
+
+    @Override
+    public String valToString(){
+        return Integer.toString(getPitch());
     }
 
     @Override

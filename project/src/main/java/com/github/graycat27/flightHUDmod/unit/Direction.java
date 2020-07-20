@@ -1,6 +1,6 @@
 package com.github.graycat27.flightHUDmod.unit;
 
-public class Direction {
+public class Direction implements IUnit {
 
     /** 設定下限値 */
     public static final int MIN_VAL = 0;
@@ -23,6 +23,11 @@ public class Direction {
 
     public int getDirection(){
         return direction;
+    }
+
+    @Override
+    public String valToString(){
+        return Integer.toString(getDirection());
     }
 
     @Override

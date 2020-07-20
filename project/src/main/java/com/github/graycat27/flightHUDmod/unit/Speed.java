@@ -4,7 +4,7 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class Speed {
+public class Speed implements IUnit {
 
     /** Minecraft TICK par Second<br>
      * 20ticks/sec */
@@ -81,6 +81,17 @@ public class Speed {
     /** 鉛直速度を返す */
     public double getVerticalSpeed(){
         return verticalSpeed;
+    }
+
+    @Override
+    /** Horizon, Vertical, Actual<br>
+     * 精度は小数第2位まで保証 */
+    public String valToString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%.3f",horizonSpeed)).append(',');
+        sb.append(String.format("%.3f",verticalSpeed)).append(',');
+        sb.append(String.format("%.3f",actualSpeed));
+        return sb.toString();
     }
 
     @Override
