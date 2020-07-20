@@ -1,12 +1,11 @@
 package com.github.graycat27.flightHUDmod;
 
 import com.github.graycat27.flightHUDmod.guiComponent.*;
-import com.github.graycat27.flightHUDmod.unit.Speed;
 
 public class FlightHUDGUIController {
 
     private Compass compass;
-    private Height height;
+    private HeightMeter heightMeter;
     private PitchMeter pitchMeter;
     private SpeedMeter speedMeter;
     private Warning warning;
@@ -19,7 +18,9 @@ public class FlightHUDGUIController {
         if(!compass.isDisplayed()) {
             compass.show();
         }
-//        height.show();
+        if(!heightMeter.isDisplayed()){
+            heightMeter.show();
+        }
         if(!pitchMeter.isDisplayed()){
             pitchMeter.show();
         }
@@ -32,12 +33,14 @@ public class FlightHUDGUIController {
 
     public void updateAllComponent(){
         compass.update();
+        heightMeter.update();
         pitchMeter.update();
         speedMeter.update();
     }
 
     public void hideAllComponent(){
         compass.hide();
+        heightMeter.hide();
         pitchMeter.hide();
         speedMeter.hide();
 
@@ -46,14 +49,12 @@ public class FlightHUDGUIController {
     private void checkComponent(){
         if(compass == null){
             compass = new Compass();
-            FlightHUDMod.getLogger().debug("compass has created!");
         }
-//        if(height == null){
-//            height = new Height();
-//        }
+        if(heightMeter == null){
+            heightMeter = new HeightMeter();
+        }
         if(pitchMeter == null){
             pitchMeter = new PitchMeter();
-            FlightHUDMod.getLogger().debug("pitch has created!");
         }
         if(speedMeter == null){
             speedMeter = new SpeedMeter();
