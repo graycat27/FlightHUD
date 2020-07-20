@@ -18,11 +18,14 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-@Mod("flighthudmod")
+@Mod(FlightHUDMod.MODID)
 public class FlightHUDMod
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
+    /** MODID for flightHUDMod */
+    public static final String MODID = "flighthudmod";
+
     public static FlightHUDGUIController guiController;
 
     public static Logger getLogger(){

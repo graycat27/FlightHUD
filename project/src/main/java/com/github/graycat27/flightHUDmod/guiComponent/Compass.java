@@ -1,6 +1,7 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
+import com.github.graycat27.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,40 +12,33 @@ import net.minecraft.entity.player.PlayerEntity;
 public class Compass extends GuiComponent {
 
     /** 北を示す定数値 0ではなく360を用いる */
-    private final int NORTH = 360;
+    private final Direction NORTH = new Direction(360);
     /** 東を示す定数値 */
-    private final int EAST = 90;
+    private final Direction EAST = new Direction(90);
     /** 南を示す定数値 */
-    private final int SOUTH = 180;
+    private final Direction SOUTH = new Direction(180);
     /** 西を示す定数値 */
-    private final int WEST = 270;
-    /** 未設定状態を示す定数値 */
-    private final int UNSET = 0;
-    /** 1周を示す定数値 */
-    private final int ROUND = 360;
+    private final Direction WEST = new Direction(270);
 
     /** direction - player facing
      * 0は未設定を意味する（北の場合は360） */
-    private int direction = UNSET;
+    private Direction direction = null;
+
 
     /** setter for direction<br>
      * require dir between 1 - 360
-     * @param dir 1-360 value
+     * @param dir direction 1-360 value
      * @throws IllegalArgumentException when param is not between 1-360 */
     private void setDirection(int dir){
-        if( dir <= UNSET || ROUND < dir){
-            //must between 1 - 360 (not 0)
-            throw new IllegalArgumentException("direction must in 1-360 but was "+ dir);
-        }
-        this.direction = dir;
+        direction = new Direction(dir);
     }
 
     private void resetDirection(){
-        this.direction = UNSET;
+        this.direction = null;
     }
 
-    private int getDirection() throws IllegalStateException{
-        if(direction == UNSET){
+    private Direction getDirection() throws IllegalStateException{
+        if(direction == null){
             throw new IllegalStateException("direction is unset");
         }
         return direction;
@@ -74,12 +68,12 @@ public class Compass extends GuiComponent {
         //プレイヤーの向いている方角を算出
         /* playerYaw = SOUTH(=0)を基準に右回りを正として、回転した角度分増減する */
         float playerYaw = player.rotationYaw;
-        while(playerYaw < SOUTH){
-            playerYaw += ROUND;
+        while(playerYaw < SOUTH.getDirection()){
+            playerYaw += Direction.ROUND;
         }
-        int intFlightDirection = Math.round((playerYaw + SOUTH) % ROUND);
-        if(intFlightDirection == UNSET){
-            intFlightDirection = NORTH;
+        int intFlightDirection = Math.round((playerYaw + SOUTH.getDirection()) % Direction.ROUND);
+        if(intFlightDirection == Direction.MIN_VAL){
+            intFlightDirection = NORTH.getDirection();
         }
 
         setDirection(intFlightDirection);
