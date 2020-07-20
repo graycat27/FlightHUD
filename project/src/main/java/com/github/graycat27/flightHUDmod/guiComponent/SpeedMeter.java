@@ -18,13 +18,6 @@ public class SpeedMeter extends GuiComponent {
     }
 
     @Override
-    public void show(){
-        super.show();
-
-        update();
-    }
-
-    @Override
     public void update() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if(player == null){

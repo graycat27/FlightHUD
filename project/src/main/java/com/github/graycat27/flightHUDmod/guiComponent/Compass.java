@@ -49,15 +49,6 @@ public class Compass extends GuiComponent {
     }
 
     @Override
-    public void show(){
-        super.show();
-    //    displayTitle("TESTtitle", "TESTsubTITLE", 5, 30, 3);
-
-        update();
-
-    }
-
-    @Override
     public void update(){
         ClientPlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
@@ -82,5 +73,14 @@ public class Compass extends GuiComponent {
 
     }
 
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        sb.append("isDisplayed").append(':').append(isDisplayed()).append(',');
+        sb.append("direction").append(':').append(direction.toString());
+        sb.append('}');
+        return sb.toString();
+    }
 
 }

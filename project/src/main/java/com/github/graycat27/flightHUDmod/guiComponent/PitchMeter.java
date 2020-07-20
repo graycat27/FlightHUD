@@ -33,12 +33,6 @@ public class PitchMeter extends GuiComponent {
     }
 
     @Override
-    public void show(){
-        super.show();
-        update();
-    }
-
-    @Override
     public void update() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if(player == null){
@@ -53,6 +47,16 @@ public class PitchMeter extends GuiComponent {
         pitch = new Pitch(intFlightPitch);
 
         FlightHUDMod.getLogger().debug(getPitch());
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        sb.append("isDisplayed").append(':').append(isDisplayed()).append(',');
+        sb.append("pitch").append(':').append(pitch.toString());
+        sb.append('}');
+        return sb.toString();
     }
 
 }
