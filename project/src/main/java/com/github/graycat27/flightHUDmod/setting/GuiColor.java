@@ -6,8 +6,8 @@ package com.github.graycat27.flightHUDmod.setting;
 public enum GuiColor {
 
     WHITE("FFFFFF"),
-    RED("FF0000"),
-
+    RED("FF3030"),
+    BLUE("00C0FF"),
 
 
     DEFAULT("00FF44");
@@ -17,6 +17,10 @@ public enum GuiColor {
 
     GuiColor(String colorCode){
         this.colorCode = colorCode;
+    }
+
+    public int getInt(){
+        return Integer.parseInt(this.colorCode, 16);
     }
 
 
