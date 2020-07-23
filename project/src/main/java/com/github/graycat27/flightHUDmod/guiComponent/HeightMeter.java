@@ -22,7 +22,7 @@ public class HeightMeter extends GuiComponent  {
     }
 
     public HeightMeter(){
-        super(Minecraft.getInstance());
+        super();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class PitchMeter extends GuiComponent {
     }
 
     public PitchMeter(){
-        super(Minecraft.getInstance());
+        super();
 
     }
 

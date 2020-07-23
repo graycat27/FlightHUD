@@ -14,7 +14,7 @@ public class SpeedMeter extends GuiComponent {
     private Speed speed = null;
 
     public SpeedMeter(){
-        super(Minecraft.getInstance());
+        super();
     }
 
     @Override

@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.gui.*;
 
-public abstract class GuiComponent extends ForgeIngameGui implements IGuiComponent {
+public abstract class GuiComponent implements IGuiComponent {
 
     //field
     /** 部品が表示状態か */
@@ -16,9 +16,8 @@ public abstract class GuiComponent extends ForgeIngameGui implements IGuiCompone
 //    private final ResourceLocation gui = new ResourceLocation( "");
 
     //constructor
-    public GuiComponent(Minecraft mc)
-    {
-        super(mc);
+    public GuiComponent(){
+        //nothing to do
     }
 
     //method

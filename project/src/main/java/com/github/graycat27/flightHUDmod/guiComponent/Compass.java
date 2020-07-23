@@ -45,7 +45,7 @@ public class Compass extends GuiComponent {
     }
 
     public Compass(){
-        super(Minecraft.getInstance());
+        super();
     }
 
     @Override

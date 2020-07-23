@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 public class Warning extends GuiComponent {
 
     public Warning(){
-        super(Minecraft.getInstance());
+        super();
     }
 
     @Override
