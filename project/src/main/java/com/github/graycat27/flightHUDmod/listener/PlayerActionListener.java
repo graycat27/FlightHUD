@@ -1,6 +1,5 @@
-package com.github.graycat27.flightHUDmod.Listener;
+package com.github.graycat27.flightHUDmod.listener;
 
-import com.github.graycat27.flightHUDmod.guiComponent.Compass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
@@ -10,7 +9,6 @@ import net.minecraftforge.fml.common.*;
 import com.github.graycat27.flightHUDmod.FlightHUDGUIController;
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraft.util.text.StringTextComponent;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class PlayerActionListener {
