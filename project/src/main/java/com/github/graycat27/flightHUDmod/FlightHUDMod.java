@@ -42,8 +42,6 @@ public class FlightHUDMod
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(PlayerActionListener::playerFall);
-
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
