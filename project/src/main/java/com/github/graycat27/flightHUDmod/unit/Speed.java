@@ -34,7 +34,7 @@ public class Speed implements IUnit {
         double horizonSpeed = calcSpeed(v3d.getX(), v3d.getZ());
         double verticalSpeed = calcSpeed(v3d.getY());
         if(v3d.getY() < 0){
-            verticalSpeed *= (-1);
+            verticalSpeed *= (-1);  //calcSpeed() always returns positive Val
         }
 
         setSpeed(horizonSpeed, verticalSpeed);
