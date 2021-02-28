@@ -23,8 +23,8 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
         if(hPos == null){
             throw new IllegalArgumentException("TextDisplay constructor param was null : hPos");
         }
-        setDispValue(text);
         this.hPos = hPos;
+        setDispValue(text);
     }
     public TextDisplay(int posX, int posY, int width, int height, boolean isVisible,
                        String text, TextHorizontalPosition hPos, GuiColor color){
@@ -35,8 +35,8 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
         if(color == null){
             throw new IllegalArgumentException("TextDisplay constructor param was null : color");
         }
-        setDispValue(text);
         this.hPos = hPos;
+        setDispValue(text);
     }
 
     @Override
