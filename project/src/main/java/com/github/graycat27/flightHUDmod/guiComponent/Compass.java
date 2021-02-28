@@ -2,13 +2,11 @@ package com.github.graycat27.flightHUDmod.guiComponent;
 
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
-import com.github.graycat27.flightHUDmod.guiDisplay.IGuiDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 
 /**
  * 方角（N-E-S-W 0-90-180-270-360）の描画

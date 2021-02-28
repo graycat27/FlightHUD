@@ -8,8 +8,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
