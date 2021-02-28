@@ -4,8 +4,12 @@ package com.github.graycat27.flightHUDmod.guiDisplay;
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.setting.GuiColor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.gui.ForgeIngameGui;
+import org.lwjgl.system.CallbackI;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +17,24 @@ import java.util.List;
  *
  * subclasses must override method "equals","clone"
  */
-abstract public class GuiDisplay extends ForgeIngameGui implements IGuiDisplay {
+//abstract public class GuiDisplay extends ForgeIngameGui implements IGuiDisplay {
+abstract public class GuiDisplay extends AbstractGui implements IGuiDisplay {
+
+    /** リソースフォルダパス */
+    protected String resourcePath = "";
+    protected String generateResourcePath(String fileName){
+        if(StringUtils.isNullOrEmpty(fileName)){
+            String errMsg = "param 'fileName' was empty";
+            FlightHUDMod.getLogger().warn(errMsg);
+            throw new NullPointerException(errMsg);
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(FlightHUDMod.MODID).append(':')
+                .append(color.name()).append(File.pathSeparator)
+                .append(fileName);
+        return sb.toString();
+    }
+
 
     /** 表示位置x */
     private int dispPosX;
@@ -35,7 +56,8 @@ abstract public class GuiDisplay extends ForgeIngameGui implements IGuiDisplay {
     private boolean visible;
 
     public GuiDisplay(int posX, int posY, int width, int height, boolean isVisible){
-        super(Minecraft.getInstance());
+        //super(Minecraft.getInstance());
+        super();
         dispPosX = posX;
         dispPosY = posY;
         dispWidth = width;
@@ -44,7 +66,8 @@ abstract public class GuiDisplay extends ForgeIngameGui implements IGuiDisplay {
         color = GuiColor.DEFAULT;
     }
     public GuiDisplay(int posX, int posY, int width, int height, boolean isVisible, GuiColor color){
-        super(Minecraft.getInstance());
+        //super(Minecraft.getInstance());
+        super();
         dispPosX = posX;
         dispPosY = posY;
         dispWidth = width;
@@ -105,6 +128,9 @@ abstract public class GuiDisplay extends ForgeIngameGui implements IGuiDisplay {
     @Override
     public void setVisible(boolean willVisible){
         visible = willVisible;
+        if(!visible){
+
+        }
     }
     @Override
     public boolean isVisible(){

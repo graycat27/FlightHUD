@@ -4,17 +4,29 @@ import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.setting.GuiColor;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderState;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.TransformationMatrix;
+import org.apache.commons.lang3.math.NumberUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-public class TextDisplay extends GuiDisplay {
+public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
 
     private String dispValue = null;
     /** 禁止パターン 改行を含む場合 */
-    private Pattern denyPattern = Pattern.compile(".*\\R.*");
-    private int MARGIN = Minecraft.getInstance().fontRenderer.getStringWidth(" ");
-    private TextHorizontalPosition hPos;
+    private static final Pattern denyPattern = Pattern.compile(".*\\R.*");
+    public static final int MARGIN = Minecraft.getInstance().fontRenderer.getStringWidth(" ");
+    private final TextHorizontalPosition hPos;
 
     public TextDisplay(int posX, int posY, int width, int height, boolean isVisible,
                        String text, TextHorizontalPosition hPos){
@@ -38,12 +50,25 @@ public class TextDisplay extends GuiDisplay {
         this.hPos = hPos;
     }
 
+    @Override
+    public void setVisible(boolean willVisible){
+        super.setVisible(willVisible);
+        if(isVisible()){
+            drawText();
+        }
+    }
+
+    @Override
+    public void setDispValue(Object obj){
+        if(obj == null){
+            throw new IllegalArgumentException("param value is null");
+        }
+        setDispValue(obj.toString());
+    }
+
     private void setDispValue(String text){
         //validate
         //just single line text
-        if(text == null){
-            throw new IllegalArgumentException("text is null");
-        }
         if(!isAllowedPattern(text)) {
             throw new IllegalArgumentException("text must in one line");
         }
@@ -52,6 +77,9 @@ public class TextDisplay extends GuiDisplay {
         }
 
         this.dispValue = text;
+        if(isVisible()){
+            drawText();
+        }
     }
 
     public String getDispValue(){
@@ -62,15 +90,43 @@ public class TextDisplay extends GuiDisplay {
         int color = getColor().getInt();
         switch (hPos){
             case LEFT:
+
                 //renderer, text, x, y, color
-                super.drawString(getFontRenderer(), dispValue, getDispPosX(), getDispPosY(), color);
+//                Minecraft.getInstance().fontRenderer.drawStringWithShadow(dispValue, getDispPosX(), getDispPosY(), color);
                 break;
             case RIGHT:
-                super.drawRightAlignedString(getFontRenderer(), dispValue, getDispPosX(), getDispPosY(), color);
+//                Minecraft.getInstance().fontRenderer.drawString(dispValue, getDispPosX(), getDispPosY(), color);
+//                drawRightAlignedString(getFontRenderer(), dispValue, getDispPosX(), getDispPosY(), color);
                 break;
             default:  // case CENTER:
-                super.drawCenteredString(getFontRenderer(), dispValue, getDispPosX(), getDispPosY(), color);
+
+
+//                Minecraft.getInstance().fontRenderer.drawStringWithShadow(dispValue, getDispPosX(), getDispPosY(), color);
         }
+
+        /* TEST */
+        IRenderTypeBuffer.Impl renderTypeBuffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+    /*    Minecraft.getInstance().fontRenderer.renderString(dispValue, (float)getDispPosX(), (float)getDispPosY(),
+                color, false, TransformationMatrix.identity().getMatrix(), renderTypeBuffer, true,
+                0, 0xFFFFFF);
+    */
+        //RenderSystem.pushMatrix();
+        FlightHUDMod.getLogger().info("renderString is called");
+
+        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+        /*
+        fontRenderer.renderString("TEST string ", 150, 150, 0x123456,
+                false, TransformationMatrix.identity().getMatrix(), renderTypeBuffer, true,
+                0, 0xFFFFFF);
+*/
+        fontRenderer.drawString(new MatrixStack(), "test STRING this is graycay27",
+                150, 150, 0x123456);
+        renderTypeBuffer.finish();
+
+      //  renderTypeBuffer.finish();
+        /* TEST END */
+
+
     }
 
     private boolean isAllowedPattern(String text){
@@ -109,6 +165,9 @@ public class TextDisplay extends GuiDisplay {
                 return false;
             }
         }catch(Exception e){
+
+            NumberUtils.isDigits("param");
+
             FlightHUDMod.getLogger().warn("exception occurred with checking equals", e);
             return false;
         }

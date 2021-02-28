@@ -1,7 +1,11 @@
 package com.github.graycat27.flightHUDmod.guiDisplay;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public interface IGuiDisplay {
 
     int getDispPosX();
