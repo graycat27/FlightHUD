@@ -1,6 +1,6 @@
 package com.github.graycat27.flightHUDmod;
 
-import com.github.graycat27.flightHUDmod.listener.PlayerActionListener;
+import com.github.graycat27.flightHUDmod.listener.RenderListener;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -44,6 +44,7 @@ public class FlightHUDMod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(RenderListener.class);
     }
 
     private void setup(final FMLCommonSetupEvent event)

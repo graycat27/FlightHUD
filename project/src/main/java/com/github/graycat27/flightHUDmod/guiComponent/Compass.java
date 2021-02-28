@@ -1,6 +1,10 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
+import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
+import com.github.graycat27.flightHUDmod.guiDisplay.IGuiDisplay;
+import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
+import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -24,6 +28,8 @@ public class Compass extends GuiComponent {
      * 0は未設定を意味する（北の場合は360） */
     private Direction direction = null;
 
+    private IGuiValueDisplay textDisplay;
+    private String facingTextFormat = "%s";
 
     /** setter for direction<br>
      * require dir between 1 - 360
@@ -46,6 +52,27 @@ public class Compass extends GuiComponent {
 
     public Compass(){
         super();
+        initDisplayComponent();
+    }
+
+    private void initDisplayComponent(){
+        Minecraft mc = Minecraft.getInstance();
+        mc.getMainWindow().getScaledWidth();
+        mc.getMainWindow().getScaledHeight();
+
+        int posX = 5;   //FIXME display position
+        int posY = 10;
+        int width = mc.fontRenderer.getStringWidth("123") + TextDisplay.MARGIN;
+        int height = mc.fontRenderer.FONT_HEIGHT;
+        boolean isVisible = false;
+        String text = "";
+        TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
+        textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
+    }
+
+    @Override
+    protected void drawDisplayComponent(){
+        textDisplay.setVisible(true);
     }
 
     @Override
@@ -71,6 +98,7 @@ public class Compass extends GuiComponent {
 
         FlightHUDMod.getLogger().debug(getDirection());
 
+        textDisplay.setDispValue(String.format(facingTextFormat, getDirection().valToString()));
     }
 
     @Override

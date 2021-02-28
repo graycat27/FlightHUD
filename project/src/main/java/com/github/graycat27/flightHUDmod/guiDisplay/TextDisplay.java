@@ -87,10 +87,8 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
     }
 
     private void drawText(){
-        int color = getColor().getInt();
         switch (hPos){
             case LEFT:
-
                 //renderer, text, x, y, color
 //                Minecraft.getInstance().fontRenderer.drawStringWithShadow(dispValue, getDispPosX(), getDispPosY(), color);
                 break;
@@ -99,34 +97,10 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
 //                drawRightAlignedString(getFontRenderer(), dispValue, getDispPosX(), getDispPosY(), color);
                 break;
             default:  // case CENTER:
-
-
-//                Minecraft.getInstance().fontRenderer.drawStringWithShadow(dispValue, getDispPosX(), getDispPosY(), color);
+                Minecraft.getInstance().fontRenderer.drawString(new MatrixStack(),
+                        getDispValue(), getDispPosX(), getDispPosY(), getColor().getInt());
+                break;
         }
-
-        /* TEST */
-        IRenderTypeBuffer.Impl renderTypeBuffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-    /*    Minecraft.getInstance().fontRenderer.renderString(dispValue, (float)getDispPosX(), (float)getDispPosY(),
-                color, false, TransformationMatrix.identity().getMatrix(), renderTypeBuffer, true,
-                0, 0xFFFFFF);
-    */
-        //RenderSystem.pushMatrix();
-        FlightHUDMod.getLogger().info("renderString is called");
-
-        FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
-        /*
-        fontRenderer.renderString("TEST string ", 150, 150, 0x123456,
-                false, TransformationMatrix.identity().getMatrix(), renderTypeBuffer, true,
-                0, 0xFFFFFF);
-*/
-        fontRenderer.drawString(new MatrixStack(), "test STRING this is graycay27",
-                150, 150, 0x123456);
-        renderTypeBuffer.finish();
-
-      //  renderTypeBuffer.finish();
-        /* TEST END */
-
-
     }
 
     private boolean isAllowedPattern(String text){

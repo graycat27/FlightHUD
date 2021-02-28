@@ -39,11 +39,18 @@ public class FlightHUDGUIController {
     }
 
     public void hideAllComponent(){
-        compass.hide();
-        heightMeter.hide();
-        pitchMeter.hide();
-        speedMeter.hide();
-
+        if(compass != null && compass.isDisplayed()){
+            compass.hide();
+        }
+        if(heightMeter != null && heightMeter.isDisplayed()){
+            heightMeter.hide();
+        }
+        if(pitchMeter != null && pitchMeter.isDisplayed()){
+            pitchMeter.hide();
+        }
+        if(speedMeter != null && speedMeter.isDisplayed()){
+            speedMeter.hide();
+        }
     }
 
     private void checkComponent(){

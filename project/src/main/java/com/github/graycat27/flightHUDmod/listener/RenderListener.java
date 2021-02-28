@@ -19,20 +19,13 @@ import com.github.graycat27.flightHUDmod.FlightHUDGUIController;
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class PlayerActionListener {
+public class RenderListener {
 
+    /**
+     * Overlay GUI drawing handler
+     */
     @SubscribeEvent
-    public static void playerFall(TickEvent.RenderTickEvent e){
-        // RenderGameOverlayEvent
-        //
-
-
-   /*     LivingEntity ent = e.getEntityLiving();
-        if(!(ent instanceof PlayerEntity)){
-            return;
-        }
-
-*/
+    public static void renderTickHandler(TickEvent.RenderTickEvent e){
 
         PlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
@@ -41,45 +34,26 @@ public class PlayerActionListener {
             return;
         }
 
-        double lastPosX = player.lastTickPosX;
-
+        FlightHUDGUIController controller = FlightHUDMod.getGuiController();
         if(player.isOnGround()){
-            //TODO GUIの非表示処理
+            //controller.hideAllComponent();
             return;
         }
 
-        if(player.isSwimming()){
-            FlightHUDMod.getLogger().debug("player is swimming");
-        }
-
-        if(!player.isElytraFlying()){
-            FlightHUDMod.getLogger().debug("player is not flying with Elytra");
+        if(player.fallDistance != 0 && player.fallDistance < 1
+                && (!player.isSwimming() && !player.isElytraFlying())){
+            //単純なジャンプ時の描画抑止
+            //controller.hideAllComponent();
+            return;
         }
 
         if(player.isInWater() || player.isInLava()){
             FlightHUDMod.getLogger().debug("player is in the water or lava");
         }
-        int flyingTicks = player.getTicksElytraFlying();
 
-        if(flyingTicks % 4 == 0) {
+        //render GUI components
+        controller.showAllComponent();
+        controller.updateAllComponent();
 
-            FlightHUDMod.getLogger().debug("player is flying for " + player.getTicksElytraFlying() + " ticks");
-
-            FlightHUDGUIController controller = FlightHUDMod.getGuiController();
-
-            controller.showAllComponent();
-
-            controller.updateAllComponent();
-
-/*
-            //FontRenderer.drawString(MatrixStack, String, Float, Float, Integer)
-            RenderSystem.pushMatrix();
-            Minecraft.getInstance().fontRenderer.func_238421_b_(new MatrixStack(),
-                    "TEXT", 0f, 0f, 0x123456);
-            RenderSystem.popMatrix();
-
- */
-        }
-        //controller.showAllComponent();
     }
 }
