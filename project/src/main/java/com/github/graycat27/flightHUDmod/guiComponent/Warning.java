@@ -9,6 +9,11 @@ public class Warning extends GuiComponent {
     }
 
     @Override
+    protected void drawDisplayComponent(){
+        //throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void update() {
         throw new UnsupportedOperationException();
     }

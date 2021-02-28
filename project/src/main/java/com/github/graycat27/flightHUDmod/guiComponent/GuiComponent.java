@@ -1,5 +1,6 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
+import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.gui.*;
@@ -31,9 +32,12 @@ public abstract class GuiComponent implements IGuiComponent {
             return;
         }
 
-        //TODO makeThis
         //show GUI
-
+        try {
+            drawDisplayComponent();
+        }catch(UnsupportedOperationException e){
+            FlightHUDMod.getLogger().error(e);
+        }
         displayed = true;
     }
 
@@ -54,5 +58,7 @@ public abstract class GuiComponent implements IGuiComponent {
     public void update() {
         throw new UnsupportedOperationException();
     }
+
+    abstract protected void drawDisplayComponent();
 
 }

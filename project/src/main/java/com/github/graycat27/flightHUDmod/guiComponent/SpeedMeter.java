@@ -18,6 +18,11 @@ public class SpeedMeter extends GuiComponent {
     }
 
     @Override
+    protected void drawDisplayComponent(){
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void update() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if(player == null){
