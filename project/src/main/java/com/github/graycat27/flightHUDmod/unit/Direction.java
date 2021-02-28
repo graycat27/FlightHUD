@@ -27,7 +27,7 @@ public class Direction implements IUnit {
 
     @Override
     public String valToString(){
-        return Integer.toString(getDirection());
+        return String.format("%03d", getDirection());
     }
 
     @Override

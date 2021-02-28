@@ -5,15 +5,7 @@ import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.setting.GuiColor;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderState;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.TransformationMatrix;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.HashMap;
@@ -25,7 +17,6 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
     private String dispValue = null;
     /** 禁止パターン 改行を含む場合 */
     private static final Pattern denyPattern = Pattern.compile(".*\\R.*");
-    public static final int MARGIN = Minecraft.getInstance().fontRenderer.getStringWidth(" ");
     private final TextHorizontalPosition hPos;
 
     public TextDisplay(int posX, int posY, int width, int height, boolean isVisible,
@@ -87,27 +78,29 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
     }
 
     private void drawText(){
+        //posX,Y are left-top corner position
+        int fixPosX = getDispPosX();
+        int fixPosY = getDispPosY() - (getDispHeight() / 2);
         switch (hPos){
             case LEFT:
-                //renderer, text, x, y, color
-//                Minecraft.getInstance().fontRenderer.drawStringWithShadow(dispValue, getDispPosX(), getDispPosY(), color);
                 break;
             case RIGHT:
-//                Minecraft.getInstance().fontRenderer.drawString(dispValue, getDispPosX(), getDispPosY(), color);
-//                drawRightAlignedString(getFontRenderer(), dispValue, getDispPosX(), getDispPosY(), color);
+                fixPosX -= (getDispWidth());
                 break;
             default:  // case CENTER:
-                Minecraft.getInstance().fontRenderer.drawString(new MatrixStack(),
-                        getDispValue(), getDispPosX(), getDispPosY(), getColor().getInt());
+                fixPosX -= (getDispWidth()/2);
                 break;
         }
+
+        Minecraft.getInstance().fontRenderer.drawStringWithShadow(new MatrixStack(),
+                getDispValue(), fixPosX, fixPosY, getColor().getInt());
     }
 
     private boolean isAllowedPattern(String text){
         return !denyPattern.matcher(text).matches();
     }
     private boolean isDisplayableWidth(String text){
-        return (getDispWidth() - MARGIN*2) > Minecraft.getInstance().fontRenderer.getStringWidth(text);
+        return getDispWidth() >= Minecraft.getInstance().fontRenderer.getStringWidth(text);
     }
 
     @Override
@@ -117,7 +110,7 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
             obj = new TextDisplay(getDispPosX(), getDispPosY(), getDispWidth(), getDispHeight(),
                     isVisible(), getDispValue(), this.hPos, getColor());
         }catch(IllegalArgumentException e){
-            FlightHUDMod.getLogger().warn("couldn`t make clone object", e);
+            FlightHUDMod.getLogger().warn("couldn't make clone object", e);
         }
         return obj;
     }

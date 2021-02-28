@@ -57,12 +57,12 @@ public class Compass extends GuiComponent {
 
     private void initDisplayComponent(){
         Minecraft mc = Minecraft.getInstance();
-        mc.getMainWindow().getScaledWidth();
-        mc.getMainWindow().getScaledHeight();
+        int windowWidth = mc.getMainWindow().getScaledWidth();
+        int windowHeight = mc.getMainWindow().getScaledHeight();
 
-        int posX = 5;   //FIXME display position
-        int posY = 10;
-        int width = mc.fontRenderer.getStringWidth("123") + TextDisplay.MARGIN;
+        int posX = windowWidth / 2;
+        int posY = windowHeight / 3;
+        int width = mc.fontRenderer.getStringWidth("360");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = false;
         String text = "";
