@@ -1,6 +1,7 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
+import com.github.graycat27.flightHUDmod.consts.DirectionValue;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
@@ -14,13 +15,13 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 public class Compass extends GuiComponent {
 
     /** 北を示す定数値 0ではなく360を用いる */
-    private final Direction NORTH = new Direction(360);
+    private final Direction NORTH = new Direction(DirectionValue.NORTH);
     /** 東を示す定数値 */
-    private final Direction EAST = new Direction(90);
+    private final Direction EAST = new Direction(DirectionValue.EAST);
     /** 南を示す定数値 */
-    private final Direction SOUTH = new Direction(180);
+    private final Direction SOUTH = new Direction(DirectionValue.SOUTH);
     /** 西を示す定数値 */
-    private final Direction WEST = new Direction(270);
+    private final Direction WEST = new Direction(DirectionValue.WEST);
 
     /** direction - player facing
      * 0は未設定を意味する（北の場合は360） */
