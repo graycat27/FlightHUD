@@ -13,7 +13,7 @@ public enum GuiColor {
     DEFAULT("00FF44");
 
 
-    private String colorCode;
+    private final String colorCode;
 
     GuiColor(String colorCode){
         this.colorCode = colorCode;
