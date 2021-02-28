@@ -3,6 +3,8 @@ package com.github.graycat27.flightHUDmod.unit;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.math.vector.Vector3d;
 
+import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr3f;
+
 public class Speed implements IUnit {
 
     /** Minecraft TICK par Second<br>
@@ -74,15 +76,24 @@ public class Speed implements IUnit {
     public double getActualSpeed(){
         return actualSpeed;
     }
+    public String getActualSpeedValStr(){
+        return String.format(floatStr3f, actualSpeed);
+    }
 
     /** 水平速度を返す */
     public double getHorizonSpeed(){
         return horizonSpeed;
     }
+    public String getHorizonSpeedValStr(){
+        return String.format(floatStr3f, horizonSpeed);
+    }
 
     /** 鉛直速度を返す */
     public double getVerticalSpeed(){
         return verticalSpeed;
+    }
+    public String getVerticalSpeedValStr(){
+        return String.format(floatStr3f, verticalSpeed);
     }
 
     @Override
@@ -90,9 +101,9 @@ public class Speed implements IUnit {
      * 精度は小数第2位まで保証 */
     public String valToString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%.3f",horizonSpeed)).append(',');
-        sb.append(String.format("%.3f",verticalSpeed)).append(',');
-        sb.append(String.format("%.3f",actualSpeed));
+        sb.append(getHorizonSpeedValStr()).append(';');
+        sb.append(getVerticalSpeedValStr()).append(';');
+        sb.append(getActualSpeedValStr());
         return sb.toString();
     }
 

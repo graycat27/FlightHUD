@@ -2,6 +2,8 @@ package com.github.graycat27.flightHUDmod.unit;
 
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
+import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr3f;
+
 public class Height implements IUnit {
 
     /** height value, round(posY,3)<br>
@@ -32,7 +34,7 @@ public class Height implements IUnit {
 
     /** 精度は小数第2位まで保証(3桁取得) */
     public String valToString(){
-        return String.format("%,.3f", getHeight());
+        return String.format(floatStr3f, getHeight());
     }
 
     @Override

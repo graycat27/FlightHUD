@@ -40,7 +40,7 @@ public class HeightMeter extends GuiComponent  {
 
         int posX = windowWidth * 4/5;
         int posY = windowHeight / 2;
-        int width = mc.fontRenderer.getStringWidth("12345678.123");
+        int width = mc.fontRenderer.getStringWidth("12,345,678.123");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = false;
         String text = "";
