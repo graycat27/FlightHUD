@@ -38,8 +38,7 @@ public class RenderListener {
             return;
         }
 
-        if(player.fallDistance != 0 && player.fallDistance < 1
-                && (!player.isSwimming() && !player.isElytraFlying())){
+        if(player.fallDistance < 1 && (!player.isSwimming() && !player.isElytraFlying())){
             //単純なジャンプ時の描画抑止
             //controller.hideAllComponent();
             return;
