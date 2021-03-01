@@ -22,8 +22,6 @@ public class SpeedMeter extends GuiComponent {
 
     public SpeedMeter(){
         super();
-        FlightHUDMod.getLogger().info("SpeedMeter has constructed");
-
         initDisplayComponent();
     }
 
