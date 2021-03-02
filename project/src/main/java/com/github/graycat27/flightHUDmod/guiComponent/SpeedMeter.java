@@ -1,6 +1,5 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
-import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
@@ -72,7 +71,6 @@ public class SpeedMeter extends GuiComponent {
         }
 
         speed = new Speed(player);
-        FlightHUDMod.getLogger().debug(speed);
 
         //表示位置を水平位置から上下させるため、都度init
         initDisplayComponent();

@@ -1,6 +1,5 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
-import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
@@ -16,17 +15,6 @@ public class HeightMeter extends GuiComponent  {
     private Height height = null;
 
     private IGuiValueDisplay textDisplay;
-
-    private void resetHeight(){
-        this.height = null;
-    }
-
-    public Height getHeight(){
-        if(height == null){
-            throw new IllegalStateException("height is unset");
-        }
-        return height;
-    }
 
     public HeightMeter(){
         super();
@@ -56,11 +44,13 @@ public class HeightMeter extends GuiComponent  {
     @Override
     public void update() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
+        if(player == null){
+            return;
+        }
 
         //プレイヤーの高度を取得
         height = new Height(player);
 
-        FlightHUDMod.getLogger().debug(getHeight().toString());
         textDisplay.setDispValue(height.valToString());
     }
 

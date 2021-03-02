@@ -1,6 +1,5 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
-import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
@@ -64,7 +63,6 @@ public class PitchMeter extends GuiComponent {
         }
 
         pitch = new Pitch(player);
-        FlightHUDMod.getLogger().debug(pitch);
 
         String val = String.format("- %s -", pitch.valToString());
         pitchTextDisplay.setDispValue(val);

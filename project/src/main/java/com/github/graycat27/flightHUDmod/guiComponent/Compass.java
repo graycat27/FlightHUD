@@ -1,6 +1,5 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
-import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.DirectionValue;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
@@ -14,31 +13,11 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
  */
 public class Compass extends GuiComponent {
 
-    /** direction - player facing
-     * 0は未設定を意味する（北の場合は360） */
+    /** direction - player facing */
     private Direction direction = null;
 
     private IGuiValueDisplay textDisplay;
     private String facingTextFormat = "%s";
-
-    /** setter for direction<br>
-     * require dir between 1 - 360
-     * @param dir direction 1-360 value
-     * @throws IllegalArgumentException when param is not between 1-360 */
-    private void setDirection(int dir){
-        direction = new Direction(dir);
-    }
-
-    private void resetDirection(){
-        this.direction = null;
-    }
-
-    private Direction getDirection() throws IllegalStateException{
-        if(direction == null){
-            throw new IllegalStateException("direction is unset");
-        }
-        return direction;
-    }
 
     public Compass(){
         super();
@@ -69,7 +48,6 @@ public class Compass extends GuiComponent {
     public void update(){
         ClientPlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
-            resetDirection();
             return;
         }
 
@@ -84,11 +62,9 @@ public class Compass extends GuiComponent {
             intFlightDirection = DirectionValue.NORTH;
         }
 
-        setDirection(intFlightDirection);
+        direction = new Direction(intFlightDirection);
 
-        FlightHUDMod.getLogger().debug(getDirection());
-
-        textDisplay.setDispValue(String.format(facingTextFormat, getDirection().valToString()));
+        textDisplay.setDispValue(String.format(facingTextFormat, direction.valToString()));
     }
 
     @Override
