@@ -24,11 +24,8 @@ public class RenderHandler {
             return;
         }
 
-        if(Minecraft.getInstance().gameSettings.hideGUI){
-            return;
-        }
-
-        PlayerEntity player =  Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        PlayerEntity player =  mc.player;
         if(player == null){
             // 起動直後ワールド読み込み中に頻発
             // FlightHUDMod.getLogger().debug("object player is null");
@@ -37,17 +34,19 @@ public class RenderHandler {
 
         FlightHUDGUIController controller = FlightHUDMod.getGuiController();
 
-        Screen curScreen = Minecraft.getInstance().currentScreen;
+        if(mc.gameSettings.hideGUI){
+            return;
+        }
+        Screen curScreen = mc.currentScreen;
         if(curScreen != null && (curScreen.shouldCloseOnEsc() || curScreen.isPauseScreen())){
             //controller.hideAllComponent();
             return;
         }
 
         if(!player.isSpectator() && (
-                (player.isOnGround() || player.fallDistance <= 1.25) &&
+                (player.isOnGround() || player.fallDistance <= 1.25) && //単純なジャンプ時の描画抑止
                 (!player.isSwimming() && !player.isElytraFlying()))
         ){
-            //単純なジャンプ時の描画抑止
             //controller.hideAllComponent();
             return;
         }
