@@ -18,7 +18,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-version = '1.0'
+version = '1.0.1'
 group = 'com.github.gray27.flighthudmod'
 archivesBaseName = 'flighthudmod'
 
@@ -125,7 +125,7 @@ jar {
         attributes([
             "Specification-Title": "flighthudmod",
             "Specification-Vendor": "gray27",
-            "Specification-Version": "1", // We are version 1 of ourselves
+            "Specification-Version": "1",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"gray27",
