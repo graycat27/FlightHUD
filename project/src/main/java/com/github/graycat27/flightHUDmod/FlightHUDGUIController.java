@@ -69,6 +69,5 @@ public class FlightHUDGUIController {
 //        if(warning == null){
 //            warning = new Warning();
 //        }
-        FlightHUDMod.getLogger().debug("GUI components check done!");
     }
 }
