@@ -21,6 +21,11 @@ public class RenderListener {
     public static void renderTickHandler(TickEvent.RenderTickEvent event){
         ForgeIngameGui.renderCrosshairs = true;
 
+        if(event.phase != TickEvent.Phase.END){
+            //Phase require START
+            return;
+        }
+
         PlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
             // 起動直後ワールド読み込み中に頻発
