@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.*;
 import com.github.graycat27.flightHUDmod.FlightHUDGUIController;
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
 
+import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
+
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class RenderHandler {
 
@@ -34,7 +36,7 @@ public class RenderHandler {
 
         FlightHUDGUIController controller = FlightHUDMod.getGuiController();
 
-        if(mc.gameSettings.hideGUI){
+        if(mc.gameSettings.hideGUI || !modSettings.isShowHud()){
             return;
         }
         Screen curScreen = mc.currentScreen;

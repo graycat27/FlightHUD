@@ -1,6 +1,8 @@
 package com.github.graycat27.flightHUDmod;
 
+import com.github.graycat27.flightHUDmod.handler.KeyInputHandler;
 import com.github.graycat27.flightHUDmod.handler.RenderHandler;
+import com.github.graycat27.flightHUDmod.setting.ModSettings;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -31,6 +33,8 @@ public class FlightHUDMod
         return guiController;
     }
 
+    //各種設定
+    public static ModSettings modSettings;
 
     public FlightHUDMod() {
         // Register the setup method for modloading
@@ -45,6 +49,9 @@ public class FlightHUDMod
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(RenderHandler.class);
+        MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
+
+        this.modSettings = new ModSettings();
     }
 
     private void setup(final FMLCommonSetupEvent event)
