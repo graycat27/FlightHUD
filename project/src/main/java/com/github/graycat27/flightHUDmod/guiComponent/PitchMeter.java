@@ -18,7 +18,7 @@ public class PitchMeter extends GuiComponent {
     private Pitch pitch = null;
 
     private class Line{
-        public static final String mark = "＋";
+        public static final String mark = "+";
         public static final String angleText = "-- %s --";
     }
 

@@ -29,8 +29,6 @@ public class RenderListener {
             return;
         }
 
-        ForgeIngameGui.renderCrosshairs = true;
-
         PlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
             // 起動直後ワールド読み込み中に頻発
@@ -56,7 +54,6 @@ public class RenderListener {
         }
 
         //render GUI components
-        ForgeIngameGui.renderCrosshairs = false;
         controller.showAllComponent();
         controller.updateAllComponent();
 
