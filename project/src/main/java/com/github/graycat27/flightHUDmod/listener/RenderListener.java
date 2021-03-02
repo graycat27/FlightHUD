@@ -42,8 +42,10 @@ public class RenderListener {
             return;
         }
 
-        if((player.isOnGround() || player.fallDistance <= 1.25) &&
-                (!player.isSwimming() && !player.isElytraFlying())){
+        if(!player.isSpectator() && (
+                (player.isOnGround() || player.fallDistance <= 1.25) &&
+                (!player.isSwimming() && !player.isElytraFlying()))
+        ){
             //単純なジャンプ時の描画抑止
             //controller.hideAllComponent();
             return;
