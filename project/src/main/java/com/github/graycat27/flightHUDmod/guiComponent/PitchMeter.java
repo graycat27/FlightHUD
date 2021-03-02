@@ -21,11 +21,10 @@ public class PitchMeter extends GuiComponent {
 
     public PitchMeter(){
         super();
-        initDisplaComponent();
-
+        initDisplayComponent();
     }
 
-    private void initDisplaComponent(){
+    private void initDisplayComponent(){
         Minecraft mc = Minecraft.getInstance();
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
@@ -33,12 +32,13 @@ public class PitchMeter extends GuiComponent {
         int centerX = windowWidth / 2;
         int centerY = windowHeight / 2;
 
-        String text = "-- +90° --";
-        int pitchWidth = mc.fontRenderer.getStringWidth(text);
+        int pitchWidth = mc.fontRenderer.getStringWidth("-- +90° --");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = false;
+        String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
         pitchTextDisplay = new TextDisplay(centerX, centerY, pitchWidth, height, isVisible, text, hPos);
+
     }
 
     @Override
