@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.*;
@@ -18,6 +19,7 @@ public class RenderListener {
      */
     @SubscribeEvent
     public static void renderTickHandler(TickEvent.RenderTickEvent event){
+        ForgeIngameGui.renderCrosshairs = true;
 
         PlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
@@ -49,6 +51,7 @@ public class RenderListener {
         }
 
         //render GUI components
+        ForgeIngameGui.renderCrosshairs = false;
         controller.showAllComponent();
         controller.updateAllComponent();
 
