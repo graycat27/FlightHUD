@@ -72,9 +72,7 @@ public class SpeedMeter extends GuiComponent {
 
         speed = new Speed(player);
 
-        //表示位置を水平位置から上下させるため、都度init
         initDisplayComponent();
-
         horizonSpeedTextDisplay.setDispValue(speed.getHorizonSpeedValStr() +"→");
         String verticalStr = speed.getVerticalSpeedValStr();
         verticalStr += (speed.getVerticalSpeed()>=0 ? "↑": "↓");

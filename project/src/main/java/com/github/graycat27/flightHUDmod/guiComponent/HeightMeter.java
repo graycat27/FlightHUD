@@ -30,7 +30,7 @@ public class HeightMeter extends GuiComponent  {
         int posY = windowHeight / 2;
         int width = mc.fontRenderer.getStringWidth("12,345,678.123");
         int height = mc.fontRenderer.FONT_HEIGHT;
-        boolean isVisible = false;
+        boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.RIGHT;
         textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
@@ -51,6 +51,7 @@ public class HeightMeter extends GuiComponent  {
         //プレイヤーの高度を取得
         height = new Height(player);
 
+        initDisplayComponent();
         textDisplay.setDispValue(height.valToString());
     }
 

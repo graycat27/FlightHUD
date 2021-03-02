@@ -41,7 +41,7 @@ public class PitchMeter extends GuiComponent {
         int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, "+90°"));
         int markWidth = mc.fontRenderer.getStringWidth(Line.mark);
         int height = mc.fontRenderer.FONT_HEIGHT;
-        boolean isVisible = false;
+        boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
         pitchTextDisplay = new TextDisplay(centerX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos);
@@ -64,6 +64,7 @@ public class PitchMeter extends GuiComponent {
 
         pitch = new Pitch(player);
 
+        initDisplayComponent();
         String val = String.format("- %s -", pitch.valToString());
         pitchTextDisplay.setDispValue(val);
         centerMarkTextDisplay.setDispValue(Line.mark);

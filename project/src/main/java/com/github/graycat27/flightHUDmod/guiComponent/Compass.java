@@ -33,7 +33,7 @@ public class Compass extends GuiComponent {
         int posY = windowHeight / 3;
         int width = mc.fontRenderer.getStringWidth("360");
         int height = mc.fontRenderer.FONT_HEIGHT;
-        boolean isVisible = false;
+        boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
         textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
@@ -64,6 +64,7 @@ public class Compass extends GuiComponent {
 
         direction = new Direction(intFlightDirection);
 
+        initDisplayComponent();
         textDisplay.setDispValue(String.format(facingTextFormat, direction.valToString()));
     }
 
