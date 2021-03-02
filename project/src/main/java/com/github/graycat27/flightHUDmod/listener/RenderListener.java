@@ -19,12 +19,13 @@ public class RenderListener {
      */
     @SubscribeEvent
     public static void renderTickHandler(TickEvent.RenderTickEvent event){
-        ForgeIngameGui.renderCrosshairs = true;
 
         if(event.phase != TickEvent.Phase.END){
             //Phase require START
             return;
         }
+
+        ForgeIngameGui.renderCrosshairs = true;
 
         PlayerEntity player =  Minecraft.getInstance().player;
         if(player == null){
@@ -33,26 +34,19 @@ public class RenderListener {
             return;
         }
 
+        FlightHUDGUIController controller = FlightHUDMod.getGuiController();
+
         Screen curScreen = Minecraft.getInstance().currentScreen;
         if(curScreen != null && (curScreen.shouldCloseOnEsc() || curScreen.isPauseScreen())){
             //controller.hideAllComponent();
             return;
         }
 
-        FlightHUDGUIController controller = FlightHUDMod.getGuiController();
-        if(player.isOnGround()){
-            //controller.hideAllComponent();
-            return;
-        }
-
-        if(player.fallDistance < 1 && (!player.isSwimming() && !player.isElytraFlying())){
+        if((player.isOnGround() || player.fallDistance <= 1.25) &&
+                (!player.isSwimming() && !player.isElytraFlying())){
             //単純なジャンプ時の描画抑止
             //controller.hideAllComponent();
             return;
-        }
-
-        if(player.isInWater() || player.isInLava()){
-            FlightHUDMod.getLogger().debug("player is in the water or lava");
         }
 
         //render GUI components
