@@ -1,10 +1,9 @@
-package com.github.graycat27.flightHUDmod.listener;
+package com.github.graycat27.flightHUDmod.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.*;
@@ -12,7 +11,7 @@ import com.github.graycat27.flightHUDmod.FlightHUDGUIController;
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class RenderListener {
+public class RenderHandler {
 
     /**
      * Overlay GUI drawing handler
