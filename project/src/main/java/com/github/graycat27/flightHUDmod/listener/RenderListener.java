@@ -25,6 +25,10 @@ public class RenderListener {
             return;
         }
 
+        if(Minecraft.getInstance().gameSettings.hideGUI){
+            return;
+        }
+
         ForgeIngameGui.renderCrosshairs = true;
 
         PlayerEntity player =  Minecraft.getInstance().player;
