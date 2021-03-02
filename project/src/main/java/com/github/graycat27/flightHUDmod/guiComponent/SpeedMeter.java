@@ -6,6 +6,7 @@ import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
 
 /**
  * 速度計<br>
@@ -70,7 +71,14 @@ public class SpeedMeter extends GuiComponent {
             return;
         }
 
-        speed = new Speed(player);
+        Entity speedTarget = player;
+        Entity ridden = speedTarget.getRidingEntity();
+        while(ridden != null){
+            speedTarget = ridden;
+            ridden = ridden.getRidingEntity();
+        }
+
+        speed = new Speed(speedTarget);
 
         initDisplayComponent();
         horizonSpeedTextDisplay.setDispValue(speed.getHorizonSpeedValStr() +"→");

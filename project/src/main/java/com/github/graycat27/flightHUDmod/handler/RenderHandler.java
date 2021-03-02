@@ -43,9 +43,9 @@ public class RenderHandler {
             return;
         }
 
-        if(     player.isSpectator() ||
-                (!player.isOnGround() && player.fallDistance > 1.25) || //滞空時。単純なジャンプ時の描画抑止
-                player.isSwimming() || player.isElytraFlying()  //表示対象の条件
+        if( player.isSpectator() ||
+            (!player.isOnGround() && player.fallDistance > 1.25) || //滞空時。単純なジャンプ時の描画抑止
+            (player.getRidingEntity() != null) || player.isSwimming() || player.isElytraFlying()  //表示対象の条件
         ){
             //render GUI components
             controller.showAllComponent();

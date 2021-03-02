@@ -1,6 +1,7 @@
 package com.github.graycat27.flightHUDmod.unit;
 
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.vector.Vector3d;
 
 import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr3f;
@@ -21,17 +22,17 @@ public class Speed implements IUnit {
 
     /**
      * コンストラクタ
-     * playerを基に速度値を算出してセットする
-     * @param player 算出対象のプレイヤー
+     * entityの速度値を算出してセットする
+     * @param entity 算出対象のエンティティ
      * @throws IllegalArgumentException playerがnullの場合 または、算出値が不正の場合。
      * 前者は原因にNullPointerExceptionを持つ
      */
-    public Speed(ClientPlayerEntity player){
-        if(player == null){
-            throw new IllegalArgumentException("player is null", new NullPointerException());
+    public Speed(Entity entity){
+        if(entity == null){
+            throw new IllegalArgumentException("entity is null", new NullPointerException());
         }
 
-        Vector3d v3d = player.getMotion();
+        Vector3d v3d = entity.getMotion();
 
         double horizonSpeed = calcSpeed(v3d.getX(), v3d.getZ());
         double verticalSpeed = calcSpeed(v3d.getY());
@@ -96,9 +97,9 @@ public class Speed implements IUnit {
         return String.format(floatStr3f, verticalSpeed);
     }
 
-    @Override
     /** Horizon, Vertical, Actual<br>
      * 精度は小数第2位まで保証 */
+    @Override
     public String valToString(){
         StringBuilder sb = new StringBuilder();
         sb.append(getHorizonSpeedValStr()).append(';');
