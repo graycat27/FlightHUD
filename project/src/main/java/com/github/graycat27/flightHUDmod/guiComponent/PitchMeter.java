@@ -17,6 +17,12 @@ public class PitchMeter extends GuiComponent {
     /** pitch - player facing */
     private Pitch pitch = null;
 
+    private class Line{
+        public static final String mark = "＋";
+        public static final String angleText = "-- %s --";
+    }
+
+    private IGuiValueDisplay centerMarkTextDisplay;
     private IGuiValueDisplay pitchTextDisplay;
 
     public PitchMeter(){
@@ -32,18 +38,22 @@ public class PitchMeter extends GuiComponent {
         int centerX = windowWidth / 2;
         int centerY = windowHeight / 2;
 
-        int pitchWidth = mc.fontRenderer.getStringWidth("-- +90° --");
+        //center display
+        int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, "+90°"));
+        int markWidth = mc.fontRenderer.getStringWidth(Line.mark);
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = false;
         String text = "";
-        TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
-        pitchTextDisplay = new TextDisplay(centerX, centerY, pitchWidth, height, isVisible, text, hPos);
-
+        TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
+        pitchTextDisplay = new TextDisplay(centerX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos);
+        hPos = TextHorizontalPosition.CENTER;
+        centerMarkTextDisplay = new TextDisplay(centerX, centerY, markWidth, height, isVisible, text, hPos);
     }
 
     @Override
     protected void drawDisplayComponent(){
         pitchTextDisplay.setVisible(true);
+        centerMarkTextDisplay.setVisible(true);
     }
 
     @Override
@@ -56,8 +66,9 @@ public class PitchMeter extends GuiComponent {
         pitch = new Pitch(player);
         FlightHUDMod.getLogger().debug(pitch);
 
-        String val = String.format("-- %s --", pitch.valToString());
+        String val = String.format("- %s -", pitch.valToString());
         pitchTextDisplay.setDispValue(val);
+        centerMarkTextDisplay.setDispValue(Line.mark);
     }
 
     @Override
