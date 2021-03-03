@@ -52,6 +52,8 @@ public class FlightHUDMod
         MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 
         this.modSettings = new ModSettings();
+        KeyInputHandler.registerBindings();
+
     }
 
     private void setup(final FMLCommonSetupEvent event)
