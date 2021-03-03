@@ -34,7 +34,7 @@ public class FlightHUDMod
     }
 
     //各種設定
-    public static ModSettings modSettings;
+    public static final ModSettings modSettings = new ModSettings();
 
     public FlightHUDMod() {
         // Register the setup method for modloading
@@ -51,7 +51,6 @@ public class FlightHUDMod
         MinecraftForge.EVENT_BUS.register(RenderHandler.class);
         MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 
-        modSettings = new ModSettings();
         KeyInputHandler.registerBindings();
 
     }
