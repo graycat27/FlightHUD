@@ -1,5 +1,6 @@
 package com.github.graycat27.flightHUDmod.handler;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,7 +16,8 @@ import static org.lwjgl.glfw.GLFW.*;
 public class KeyInputHandler {
     private static final String KEY_MAP_CATEGORY = "Flight HUD Mod";
 
-    private static final KeyBinding TRIGGER_SHOW_ON = new KeyBinding("表示/非表示", GLFW_KEY_H, KEY_MAP_CATEGORY);
+    private static final KeyBinding TRIGGER_SHOW_ON =
+            new KeyBinding(I18n.format("flightHud.keyBind.description.show"), GLFW_KEY_H, KEY_MAP_CATEGORY);
 
     public static void registerBindings(){
         ClientRegistry.registerKeyBinding(KeyInputHandler.TRIGGER_SHOW_ON);
