@@ -23,7 +23,7 @@ public class FlightHUDMod
     /** MODID for flightHUDMod */
     public static final String MODID = "flighthudmod";
 
-    public static FlightHUDGUIController guiController;
+    private static FlightHUDGUIController guiController;
 
     public static Logger getLogger(){
         return LOGGER;
@@ -51,7 +51,7 @@ public class FlightHUDMod
         MinecraftForge.EVENT_BUS.register(RenderHandler.class);
         MinecraftForge.EVENT_BUS.register(KeyInputHandler.class);
 
-        this.modSettings = new ModSettings();
+        modSettings = new ModSettings();
         KeyInputHandler.registerBindings();
 
     }
