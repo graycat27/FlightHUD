@@ -1,11 +1,12 @@
 package com.github.graycat27.flightHUDmod.unit;
 
-import com.github.graycat27.flightHUDmod.consts.GuiTextFormat;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
-import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.pitchStr;
+import static com.github.graycat27.flightHUDmod.guiComponent.PitchMeter.getDgrString;
 
 public class Pitch implements IUnit {
+
+    public static final String DEGREES = "°";
 
     public static final int LEVEL = 0;
 
@@ -34,9 +35,13 @@ public class Pitch implements IUnit {
         this.pitch = intFlightPitch;
     }
 
+    public int value(){
+        return pitch;
+    }
+
     @Override
     public String valToString(){
-        return String.format(pitchStr, pitch);
+        return getDgrString(pitch);
     }
 
     @Override
