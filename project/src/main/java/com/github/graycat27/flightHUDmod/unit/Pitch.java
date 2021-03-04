@@ -7,6 +7,8 @@ import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.pitchStr;
 
 public class Pitch implements IUnit {
 
+    public static final String DEGREES = "°";
+
     public static final int LEVEL = 0;
 
     public static final int DOWN = -90;
@@ -32,6 +34,10 @@ public class Pitch implements IUnit {
             throw new IllegalArgumentException("direction must in -90to90 but was "+ pitch);
         }
         this.pitch = intFlightPitch;
+    }
+
+    public int value(){
+        return pitch;
     }
 
     @Override

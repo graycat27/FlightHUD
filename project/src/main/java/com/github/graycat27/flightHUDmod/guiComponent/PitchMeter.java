@@ -1,5 +1,6 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
+import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
@@ -16,13 +17,15 @@ public class PitchMeter extends GuiComponent {
     /** pitch - player facing */
     private Pitch pitch = null;
 
-    private class Line{
+    private static class Line{
         public static final String mark = "+";
         public static final String angleText = "-- %s --";
+        public static final String levelText = String.format(angleText, Pitch.LEVEL + Pitch.DEGREES);
     }
 
     private IGuiValueDisplay centerMarkTextDisplay;
     private IGuiValueDisplay pitchTextDisplay;
+    private IGuiValueDisplay levelMarkTextDisplay;
 
     public PitchMeter(){
         super();
@@ -47,12 +50,32 @@ public class PitchMeter extends GuiComponent {
         pitchTextDisplay = new TextDisplay(centerX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos);
         hPos = TextHorizontalPosition.CENTER;
         centerMarkTextDisplay = new TextDisplay(centerX, centerY, markWidth, height, isVisible, text, hPos);
+
+        //level display
+        double fov = mc.gameSettings.fov;
+        //fov = windowHeight view angle
+
+        if(pitch != null && (-fov/2) < pitch.value() && pitch.value() < fov/2){
+            //上下方向の表示枠内に水平線がある場合、描画位置を定める
+            double levelY = (windowHeight/2.0)  * Math.tan(Math.toRadians(pitch.value()))
+                    / Math.tan(Math.toRadians(fov/2));
+
+            int width = mc.fontRenderer.getStringWidth(Line.levelText);
+            levelMarkTextDisplay = new TextDisplay(centerX, (int)(centerY + levelY),
+                    width, height, isVisible, Line.levelText, hPos);
+
+        }else{
+            levelMarkTextDisplay = null;
+        }
     }
 
     @Override
     protected void drawDisplayComponent(){
         pitchTextDisplay.setVisible(true);
         centerMarkTextDisplay.setVisible(true);
+        if(levelMarkTextDisplay != null){
+            levelMarkTextDisplay.setVisible(true);
+        }
     }
 
     @Override
@@ -68,6 +91,9 @@ public class PitchMeter extends GuiComponent {
         String val = String.format("- %s -", pitch.valToString());
         pitchTextDisplay.setDispValue(val);
         centerMarkTextDisplay.setDispValue(Line.mark);
+        if(levelMarkTextDisplay != null) {
+            levelMarkTextDisplay.setDispValue(Line.levelText);
+        }
     }
 
     @Override
