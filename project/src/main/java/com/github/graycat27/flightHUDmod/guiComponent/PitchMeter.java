@@ -46,7 +46,7 @@ public class PitchMeter extends GuiComponent {
         int centerY = windowHeight / 2;
 
         //center display
-        int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, "+90°"));
+        int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, getDgrString(Pitch.UP)));
         int markWidth = mc.fontRenderer.getStringWidth(Line.mark);
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = this.isDisplayed();
