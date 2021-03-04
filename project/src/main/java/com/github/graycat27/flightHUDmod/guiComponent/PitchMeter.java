@@ -8,6 +8,11 @@ import com.github.graycat27.flightHUDmod.unit.Pitch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.pitchStr;
+
 /**
  * 仰俯角の描画
  * （水平Level=0, 直下=-90, 真上=90）
@@ -17,15 +22,15 @@ public class PitchMeter extends GuiComponent {
     /** pitch - player facing */
     private Pitch pitch = null;
 
-    private static class Line{
+    private class Line{
         public static final String mark = "+";
         public static final String angleText = "-- %s --";
-        public static final String levelText = String.format(angleText, Pitch.LEVEL + Pitch.DEGREES);
     }
 
     private IGuiValueDisplay centerMarkTextDisplay;
     private IGuiValueDisplay pitchTextDisplay;
-    private IGuiValueDisplay levelMarkTextDisplay;
+
+    private List<IGuiValueDisplay> degreesMarkTextDisplays;
 
     public PitchMeter(){
         super();
@@ -51,21 +56,40 @@ public class PitchMeter extends GuiComponent {
         hPos = TextHorizontalPosition.CENTER;
         centerMarkTextDisplay = new TextDisplay(centerX, centerY, markWidth, height, isVisible, text, hPos);
 
-        //level display
-        double fov = mc.gameSettings.fov;
-        //fov = windowHeight view angle
+        //each 15° display
+        degreesMarkTextDisplays = new ArrayList<>();
+        if(pitch != null){
+            double fov = mc.gameSettings.fov;
+            //fov = windowHeight view angle
+            int interval = 15;
 
-        if(pitch != null && (-fov/2) < pitch.value() && pitch.value() < fov/2){
-            //上下方向の表示枠内に水平線がある場合、描画位置を定める
-            double levelY = (windowHeight/2.0)  * Math.tan(Math.toRadians(pitch.value()))
-                    / Math.tan(Math.toRadians(fov/2));
+            /* 画面上辺の角度 */
+            double topPitch = pitch.value() + (fov/2);
+            /* 画面下辺の角度 */
+            double bottomPitch = pitch.value() - (fov/2);
+            int maxDgr = Pitch.LEVEL;
+            while(maxDgr < Pitch.UP + (int)(fov/2)){
+                maxDgr += interval;
+            }
+            int minDgr = Pitch.LEVEL;
+            while(minDgr > Pitch.DOWN - (int)(fov/2)){
+                minDgr -= interval;
+            }
 
-            int width = mc.fontRenderer.getStringWidth(Line.levelText);
-            levelMarkTextDisplay = new TextDisplay(centerX, (int)(centerY + levelY),
-                    width, height, isVisible, Line.levelText, hPos);
+            for(int dgr = maxDgr; dgr >= minDgr; dgr -= interval){
+                if(bottomPitch < dgr && dgr < topPitch){
+                    //視野内に描画されるものを生成
+                    double levelY = (windowHeight/2.0)  * Math.tan(Math.toRadians(dgr - pitch.value()))
+                            / Math.tan(Math.toRadians(fov/2));
 
-        }else{
-            levelMarkTextDisplay = null;
+                    String angleText = String.format(Line.angleText, String.format(pitchStr, dgr));
+                    int width = mc.fontRenderer.getStringWidth(angleText);
+                    IGuiValueDisplay angleDisplay = new TextDisplay(centerX, (int)(centerY - levelY),
+                            width, height, isVisible, angleText, hPos);
+                    degreesMarkTextDisplays.add(angleDisplay);
+
+                }
+            }
         }
     }
 
@@ -73,8 +97,10 @@ public class PitchMeter extends GuiComponent {
     protected void drawDisplayComponent(){
         pitchTextDisplay.setVisible(true);
         centerMarkTextDisplay.setVisible(true);
-        if(levelMarkTextDisplay != null){
-            levelMarkTextDisplay.setVisible(true);
+        if(degreesMarkTextDisplays != null){
+            for(IGuiValueDisplay d : degreesMarkTextDisplays){
+                d.setVisible(true);
+            }
         }
     }
 
@@ -91,9 +117,6 @@ public class PitchMeter extends GuiComponent {
         String val = String.format("- %s -", pitch.valToString());
         pitchTextDisplay.setDispValue(val);
         centerMarkTextDisplay.setDispValue(Line.mark);
-        if(levelMarkTextDisplay != null) {
-            levelMarkTextDisplay.setDispValue(Line.levelText);
-        }
     }
 
     @Override
