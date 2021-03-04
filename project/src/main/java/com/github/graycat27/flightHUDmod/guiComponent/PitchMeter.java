@@ -93,6 +93,16 @@ public class PitchMeter extends GuiComponent {
         }
     }
 
+    /** 角度値を文字列表現にして返します
+     * @return 0°の場合「 0°」、他は「+1°」,「-1°」など */
+    public static String getDgrString(int pitchValue){
+        if(pitchValue != Pitch.LEVEL) {
+            return String.format(pitchStr, pitchValue);
+        }
+        return " "+ pitchValue + Pitch.DEGREES;
+    }
+
+
     @Override
     protected void drawDisplayComponent(){
         pitchTextDisplay.setVisible(true);
@@ -114,7 +124,7 @@ public class PitchMeter extends GuiComponent {
         pitch = new Pitch(player);
 
         initDisplayComponent();
-        String val = String.format("- %s -", pitch.valToString());
+        String val = String.format(" %s -", pitch.valToString());
         pitchTextDisplay.setDispValue(val);
         centerMarkTextDisplay.setDispValue(Line.mark);
     }
