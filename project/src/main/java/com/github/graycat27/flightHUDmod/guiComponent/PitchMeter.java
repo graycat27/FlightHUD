@@ -82,7 +82,11 @@ public class PitchMeter extends GuiComponent {
                     double levelY = (windowHeight/2.0)  * Math.tan(Math.toRadians(dgr - pitch.value()))
                             / Math.tan(Math.toRadians(fov/2));
 
-                    String angleText = String.format(Line.angleText, String.format(pitchStr, dgr));
+                    String angleText = String.format(Line.angleText, getDgrString(dgr));
+                    if((height) > 2 * Math.abs(levelY) ){
+                        angleText = angleText.substring(0, angleText.length()-2);
+                        angleText += "   ";
+                    }
                     int width = mc.fontRenderer.getStringWidth(angleText);
                     IGuiValueDisplay angleDisplay = new TextDisplay(centerX, (int)(centerY - levelY),
                             width, height, isVisible, angleText, hPos);
