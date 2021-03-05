@@ -38,4 +38,9 @@ public class Direction implements IUnit {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public Direction clone() {
+        return new Direction(this.direction);
+    }
 }

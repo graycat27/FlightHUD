@@ -90,5 +90,9 @@ public class SpeedMeter extends GuiComponent {
         return sb.toString();
     }
 
+    @Override
+    public Speed value(){
+        return speed.clone();
+    }
 
 }

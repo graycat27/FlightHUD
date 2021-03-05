@@ -7,4 +7,7 @@ public interface IUnit {
     /** json書式にて値を返す。書式整形しない */
     @Override
     String toString();
+
+    /** 自己の複製を返す */
+    IUnit clone();
 }

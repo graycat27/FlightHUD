@@ -1,6 +1,5 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
-import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
@@ -143,4 +142,8 @@ public class PitchMeter extends GuiComponent {
         return sb.toString();
     }
 
+    @Override
+    public Pitch value() {
+        return this.pitch.clone();
+    }
 }

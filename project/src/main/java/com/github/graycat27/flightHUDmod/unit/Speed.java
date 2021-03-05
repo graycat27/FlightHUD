@@ -42,6 +42,12 @@ public class Speed implements IUnit {
         setSpeed(horizonSpeed, verticalSpeed);
     }
 
+    private Speed(double h, double v, double a){
+        this.horizonSpeed = h;
+        this.verticalSpeed = v;
+        this.actualSpeed = a;
+    }
+
     /** 1次元軸での秒速値を算出する */
     private double calcSpeed(double delta){
         return calcSpeed(delta, 0);
@@ -116,6 +122,11 @@ public class Speed implements IUnit {
         sb.append("speed").append(':').append(getActualSpeed());
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public Speed clone(){
+        return new Speed(horizonSpeed, verticalSpeed, actualSpeed);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
-import net.minecraft.client.Minecraft;
+import com.github.graycat27.flightHUDmod.unit.IUnit;
 
 public class PAPI extends GuiComponent {
 
@@ -18,5 +18,9 @@ public class PAPI extends GuiComponent {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public IUnit value() {
+        throw new UnsupportedOperationException();
+    }
 
 }

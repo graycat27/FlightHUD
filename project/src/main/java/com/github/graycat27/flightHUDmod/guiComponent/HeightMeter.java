@@ -64,4 +64,9 @@ public class HeightMeter extends GuiComponent  {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public Height value() {
+        return this.height.clone();
+    }
 }
