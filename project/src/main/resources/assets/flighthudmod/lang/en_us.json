@@ -1,3 +1,4 @@
 {
-  "flightHud.keyBind.description.show" : "Show/Hide"
+  "flightHud.keyBind.description.show" : "Show/Hide",
+  "flightHud.keyBind.description.interval" : "Change pitch gauge interval"
 }

@@ -1,3 +1,4 @@
 {
-  "flightHud.keyBind.description.show" : "表示/非表示"
+  "flightHud.keyBind.description.show" : "表示/非表示",
+  "flightHud.keyBind.description.interval" : "姿勢計ゲージ表示間隔"
 }
