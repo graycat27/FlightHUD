@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.pitchStr;
+import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
 
 /**
  * 仰俯角の描画
@@ -63,7 +64,7 @@ public class PitchMeter extends GuiComponent {
         final double fov = mc.gameSettings.fov;
         if(pitch != null){
             //fov = windowHeight view angle
-            int interval = 15;
+            int interval = modSettings.getInterval();
 
             /* 画面上辺の角度 */
             double topPitch = pitch.value() + (fov/2);
