@@ -20,15 +20,14 @@ public class FlightHUDMod
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
-    /** MODID for flightHUDMod */
-    public static final String MODID = "flighthudmod";
-
-    private static FlightHUDGUIController guiController;
-
     public static Logger getLogger(){
         return LOGGER;
     }
 
+    /** MODID for flightHUDMod */
+    public static final String MODID = "flighthudmod";
+
+    private static FlightHUDGUIController guiController;
     public static FlightHUDGUIController getGuiController(){
         return guiController;
     }
