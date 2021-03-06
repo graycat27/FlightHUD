@@ -27,6 +27,10 @@ public class Height implements IUnit {
         heightVal = Math.round((long)posY);
     }
 
+    private Height(int height){
+        this.heightVal = height;
+    }
+
     /** 高度値。精度は小数第2位まで保証 */
     public double getHeight(){
         return (double)heightVal/DIGIT;
@@ -44,5 +48,10 @@ public class Height implements IUnit {
         sb.append("height").append(':').append(valToString());
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public Height clone() {
+        return new Height(this.heightVal);
     }
 }

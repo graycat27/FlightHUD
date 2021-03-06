@@ -1,9 +1,6 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
 import com.github.graycat27.flightHUDmod.FlightHUDMod;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.gui.*;
 
 public abstract class GuiComponent implements IGuiComponent {
 

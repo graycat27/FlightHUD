@@ -35,6 +35,10 @@ public class Pitch implements IUnit {
         this.pitch = intFlightPitch;
     }
 
+    private Pitch(int pitch){
+        this.pitch = pitch;
+    }
+
     public int value(){
         return pitch;
     }
@@ -51,5 +55,10 @@ public class Pitch implements IUnit {
         sb.append("pitch").append(':').append(pitch);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public Pitch clone() {
+        return new Pitch(this.pitch);
     }
 }

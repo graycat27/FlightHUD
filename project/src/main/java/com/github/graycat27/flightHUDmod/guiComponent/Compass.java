@@ -78,4 +78,8 @@ public class Compass extends GuiComponent {
         return sb.toString();
     }
 
+    @Override
+    public Direction value() {
+        return direction == null ? null : direction.clone();
+    }
 }
