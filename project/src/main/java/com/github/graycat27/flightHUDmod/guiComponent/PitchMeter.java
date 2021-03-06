@@ -144,6 +144,6 @@ public class PitchMeter extends GuiComponent {
 
     @Override
     public Pitch value() {
-        return this.pitch.clone();
+        return pitch == null ? null : pitch.clone();
     }
 }

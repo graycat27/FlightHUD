@@ -67,6 +67,6 @@ public class HeightMeter extends GuiComponent  {
 
     @Override
     public Height value() {
-        return this.height.clone();
+        return height == null ? null : height.clone();
     }
 }

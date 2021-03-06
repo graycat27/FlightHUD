@@ -80,6 +80,6 @@ public class Compass extends GuiComponent {
 
     @Override
     public Direction value() {
-        return this.direction.clone();
+        return direction == null ? null : direction.clone();
     }
 }

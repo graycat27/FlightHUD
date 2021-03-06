@@ -92,7 +92,7 @@ public class SpeedMeter extends GuiComponent {
 
     @Override
     public Speed value(){
-        return speed.clone();
+        return speed == null ? null : speed.clone();
     }
 
 }

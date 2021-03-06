@@ -2,6 +2,8 @@ package com.github.graycat27.flightHUDmod.guiComponent;
 
 import com.github.graycat27.flightHUDmod.unit.IUnit;
 
+import javax.annotation.Nullable;
+
 public interface IGuiComponent {
 
     /** 部品を表示する。
@@ -21,6 +23,7 @@ public interface IGuiComponent {
 
     /**
      * 表示している値 */
+    @Nullable
     IUnit value();
 
 }
