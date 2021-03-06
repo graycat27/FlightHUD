@@ -1,6 +1,10 @@
 package com.github.graycat27.flightHUDmod;
 
 import com.github.graycat27.flightHUDmod.guiComponent.*;
+import com.github.graycat27.flightHUDmod.unit.Direction;
+import com.github.graycat27.flightHUDmod.unit.Height;
+import com.github.graycat27.flightHUDmod.unit.Pitch;
+import com.github.graycat27.flightHUDmod.unit.Speed;
 
 public class FlightHUDGUIController {
 
@@ -70,4 +74,18 @@ public class FlightHUDGUIController {
 //            warning = new Warning();
 //        }
     }
+
+    public Direction getDirection(){
+        return compass == null ? null : compass.value();
+    }
+    public Speed getSpeed(){
+        return speedMeter == null ? null : speedMeter.value();
+    }
+    public Height getHeight(){
+        return heightMeter == null ? null : heightMeter.value();
+    }
+    public Pitch getPitch(){
+        return pitchMeter == null ? null : pitchMeter.value();
+    }
+
 }
