@@ -1,9 +1,11 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
+import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.flightHUDmod.unit.Pitch;
+import com.github.graycat27.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
@@ -28,6 +30,7 @@ public class PitchMeter extends GuiComponent {
 
     private IGuiValueDisplay centerMarkTextDisplay;
     private IGuiValueDisplay pitchTextDisplay;
+    private IGuiValueDisplay speedPitchTextDisplay;
 
     private List<IGuiValueDisplay> degreesMarkTextDisplays;
 
@@ -57,8 +60,8 @@ public class PitchMeter extends GuiComponent {
 
         //each 15° display
         degreesMarkTextDisplays = new ArrayList<>();
+        final double fov = mc.gameSettings.fov;
         if(pitch != null){
-            double fov = mc.gameSettings.fov;
             //fov = windowHeight view angle
             int interval = 15;
 
@@ -94,6 +97,35 @@ public class PitchMeter extends GuiComponent {
                 }
             }
         }
+
+        //movement marker
+        Speed speed = FlightHUDMod.getGuiController().getSpeed();
+        if(speed != null){
+            int flightDegrees;
+            double levelY;
+            if(speed.getHorizonSpeed() != 0) {
+                double actualSpeedAngleRad = Math.atan(speed.getVerticalSpeed() / speed.getHorizonSpeed());
+                flightDegrees = (int) Math.toDegrees(actualSpeedAngleRad);
+            }else {
+                flightDegrees = (speed.getVerticalSpeed() >= 0) ? 90 : -90;
+            }
+
+            double delta = Math.toRadians(flightDegrees - pitch.value());
+            levelY = (windowHeight / 2.0) * Math.tan(delta) / Math.tan(Math.toRadians(fov / 2));
+            //ウィンドウ視野内に必ず描画する
+            if(levelY < windowHeight / -2.0 + height){
+                levelY = windowHeight / -2.0 + height;
+            }
+            if(levelY > windowHeight / 2.0 - height){
+                levelY = windowHeight / 2.0 - height;
+            }
+
+            String flightPitch = getDgrString(flightDegrees);
+            String flightPitchText = String.format("> %s <", flightPitch);
+            int width = mc.fontRenderer.getStringWidth(flightPitchText);
+            speedPitchTextDisplay = new TextDisplay(centerX, (int)(centerY - levelY),
+                    width, height, isVisible, flightPitchText, hPos);
+        }
     }
 
     /** 角度値を文字列表現にして返します
@@ -114,6 +146,9 @@ public class PitchMeter extends GuiComponent {
             for(IGuiValueDisplay d : degreesMarkTextDisplays){
                 d.setVisible(true);
             }
+        }
+        if(speedPitchTextDisplay != null) {
+            speedPitchTextDisplay.setVisible(true);
         }
     }
 
