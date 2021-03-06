@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 public class ModSettings {
@@ -20,6 +22,7 @@ public class ModSettings {
     }
     public void setShowHud(boolean willShowHud){
         this.showHUD = willShowHud;
+        saveConfigFile();
     }
 
     /** 姿勢計のゲージ間隔 */
@@ -33,11 +36,13 @@ public class ModSettings {
     public void addInterval(){
         if(interval + CHANGE_INTERVAL <= MAX_INTERVAL) {
             interval += CHANGE_INTERVAL;
+            saveConfigFile();
         }
     }
     public void subInterval(){
         if(interval - CHANGE_INTERVAL > MIN_INTERVAL) {
             interval -= CHANGE_INTERVAL;
+            saveConfigFile();
         }
     }
 
@@ -52,7 +57,7 @@ public class ModSettings {
         File dir = new File(configDir);
         FlightHUDMod.getLogger().info("flightHudMod config directory is here: "+ dir.toString());
         dir.mkdirs();
-        return new File(configDir + ConfigFile.configFileName);
+        return new File(configDir + File.separator + ConfigFile.configFileName);
     }
 
     public void readConfigFile(){
@@ -93,10 +98,29 @@ public class ModSettings {
             saveConfigFile();
         }
     }
+
     public void saveConfigFile(){
+        if(configFile.exists()){
+            FlightHUDMod.getLogger().info("over write config file");
+            configFile.delete();
+        }else {
+            FlightHUDMod.getLogger().info("generate new config file");
+        }
+        try {
+            configFile.createNewFile();
+        }catch(IOException e){
+            throw new RuntimeException(e);
+        }
         try(
             PrintWriter writer = new PrintWriter(new FileWriter(this.configFile))
         ){
+            writer.println("# Flight HUD Mod Config");
+            writer.print("# generated at ");
+            writer.println(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
+            writer.println();
+
+            writer.println(ConfigFile.SHOW + ":" + this.showHUD);
+            writer.println(ConfigFile.PITCH_INTERVAL +":"+ this.interval);
 
         }
         catch(IOException e){
