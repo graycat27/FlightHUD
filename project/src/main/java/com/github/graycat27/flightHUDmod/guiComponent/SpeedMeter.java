@@ -7,6 +7,8 @@ import com.github.graycat27.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
+import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
+
 /**
  * 速度計<br>
  * 秒速で表示する
@@ -29,7 +31,7 @@ public class SpeedMeter extends GuiComponent {
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
-        int posX = windowWidth * 2/5;
+        int posX = (int)(windowWidth * modSettings.getPositionSpeed());
         int basePosY = windowHeight / 2;
         int width = mc.fontRenderer.getStringWidth("1,234.321");
         int height = mc.fontRenderer.FONT_HEIGHT;

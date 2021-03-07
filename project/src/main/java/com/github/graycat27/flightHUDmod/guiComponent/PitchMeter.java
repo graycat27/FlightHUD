@@ -45,7 +45,7 @@ public class PitchMeter extends GuiComponent {
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
-        int centerX = windowWidth / 2;
+        int posX = (int)(windowWidth * modSettings.getPositionPitch());
         int centerY = windowHeight / 2;
 
         //center display
@@ -55,9 +55,9 @@ public class PitchMeter extends GuiComponent {
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
-        pitchTextDisplay = new TextDisplay(centerX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos);
+        pitchTextDisplay = new TextDisplay(posX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos);
         hPos = TextHorizontalPosition.CENTER;
-        centerMarkTextDisplay = new TextDisplay(centerX, centerY, markWidth, height, isVisible, text, hPos);
+        centerMarkTextDisplay = new TextDisplay(posX, centerY, markWidth, height, isVisible, text, hPos);
 
         //each 15° display
         degreesMarkTextDisplays = new ArrayList<>();
@@ -91,7 +91,7 @@ public class PitchMeter extends GuiComponent {
                         angleText += "   ";
                     }
                     int width = mc.fontRenderer.getStringWidth(angleText);
-                    IGuiValueDisplay angleDisplay = new TextDisplay(centerX, (int)(centerY - levelY),
+                    IGuiValueDisplay angleDisplay = new TextDisplay(posX, (int)(centerY - levelY),
                             width, height, isVisible, angleText, hPos);
                     degreesMarkTextDisplays.add(angleDisplay);
 
@@ -124,7 +124,7 @@ public class PitchMeter extends GuiComponent {
             String flightPitch = getDgrString(flightDegrees);
             String flightPitchText = String.format("> %s <", flightPitch);
             int width = mc.fontRenderer.getStringWidth(flightPitchText);
-            speedPitchTextDisplay = new TextDisplay(centerX, (int)(centerY - levelY),
+            speedPitchTextDisplay = new TextDisplay(posX, (int)(centerY - levelY),
                     width, height, isVisible, flightPitchText, hPos);
         }
     }
