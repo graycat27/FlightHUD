@@ -7,6 +7,8 @@ import com.github.graycat27.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
+import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
+
 /**
  * 速度計<br>
  * 秒速で表示する
@@ -18,6 +20,7 @@ public class SpeedMeter extends GuiComponent {
     private IGuiValueDisplay horizonSpeedTextDisplay;
     private IGuiValueDisplay verticalSpeedTextDisplay;
     private IGuiValueDisplay actualSpeedTextDisplay;
+    private IGuiValueDisplay speedUnitDisplay;
 
     public SpeedMeter(){
         super();
@@ -29,7 +32,7 @@ public class SpeedMeter extends GuiComponent {
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
-        int posX = windowWidth * 2/5;
+        int posX = (int)(windowWidth * modSettings.getPositionSpeed());
         int basePosY = windowHeight / 2;
         int width = mc.fontRenderer.getStringWidth("1,234.321");
         int height = mc.fontRenderer.FONT_HEIGHT;
@@ -37,8 +40,13 @@ public class SpeedMeter extends GuiComponent {
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.RIGHT;
 
+        String unitText = "[m/s]";
+        int unitWidth = mc.fontRenderer.getStringWidth(unitText);
+        TextHorizontalPosition unitPos = TextHorizontalPosition.LEFT;
+
         //init and display
-        horizonSpeedTextDisplay = new TextDisplay(posX + (width/3), basePosY, width,height, isVisible, text, hPos);
+        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos);
+        speedUnitDisplay = new TextDisplay(posX - width, basePosY, unitWidth, height, isVisible, unitText, unitPos);
 
         if(speed != null && speed.getVerticalSpeed() >= 0){
             //going UP
@@ -61,6 +69,7 @@ public class SpeedMeter extends GuiComponent {
         horizonSpeedTextDisplay.setVisible(true);
         verticalSpeedTextDisplay.setVisible(true);
         actualSpeedTextDisplay.setVisible(true);
+        speedUnitDisplay.setVisible(true);
     }
 
     @Override
