@@ -33,6 +33,12 @@ public enum CompassScaleValue {
 
     public static CompassScaleValue getByDegrees(double degrees){
         for(CompassScaleValue val : CompassScaleValue.values()){
+            while(degrees <= Direction.MIN_VAL){
+                degrees += Direction.ROUND;
+            }
+            while(Direction.ROUND < degrees){
+                degrees -= Direction.ROUND;
+            }
             if(val.degrees == degrees){
                 return val;
             }
