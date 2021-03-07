@@ -8,6 +8,8 @@ import com.github.graycat27.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
+import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
+
 /**
  * 方角（N-E-S-W 0-90-180-270-360）の描画
  */
@@ -30,7 +32,7 @@ public class Compass extends GuiComponent {
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
         int posX = windowWidth / 2;
-        int posY = windowHeight / 3;
+        int posY = (int)(windowHeight * modSettings.getPositionCompass());
         int width = mc.fontRenderer.getStringWidth("360");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = this.isDisplayed();

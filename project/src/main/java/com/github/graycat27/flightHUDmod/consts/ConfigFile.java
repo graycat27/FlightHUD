@@ -14,5 +14,10 @@ public final class ConfigFile {
     public static final String SHOW = SETTINGS + "show";
     public static final String PITCH_INTERVAL = SETTINGS + "interval";
 
+    private static final String POSITION = "flightHud.position.";
+    public static final String COMPASS = POSITION + "compass";
+    public static final String HEIGHT = POSITION + "height";
+    public static final String PITCH = POSITION + "pitch";
+    public static final String SPEED = POSITION + "speed";
 
 }

@@ -15,8 +15,17 @@ public class ModSettings {
 
     private File configFile;
 
+    private static class DefaultValue{
+        static boolean showHUD = true;
+        static int interval = 15;
+        static int positionCompass = 30;
+        static int positionHeight = 70;
+        static int positionPitch = 50;
+        static int positionSpeed = 30;
+    }
+
     /** FlightHUDの表示ON/OFF */
-    private boolean showHUD = true;
+    private boolean showHUD = DefaultValue.showHUD;
     public boolean isShowHud(){
         return showHUD;
     }
@@ -26,7 +35,7 @@ public class ModSettings {
     }
 
     /** 姿勢計のゲージ間隔 */
-    private int interval = 15;
+    private int interval = DefaultValue.interval;
     private final int CHANGE_INTERVAL = 5;
     private final int MAX_INTERVAL = Pitch.UP / 2;
     private final int MIN_INTERVAL = Pitch.LEVEL;
@@ -44,6 +53,29 @@ public class ModSettings {
             interval -= CHANGE_INTERVAL;
             saveConfigFile();
         }
+    }
+
+    /* 表示位置 */
+    /** %値 */
+    private int positionCompass = DefaultValue.positionCompass;
+    private int positionHeight = DefaultValue.positionHeight;
+    private int positionPitch = DefaultValue.positionPitch;
+    private int positionSpeed = DefaultValue.positionSpeed;
+    /** Compassの表示位置指定(上下移動)を返す。0.00～1.00の%値 */
+    public double getPositionCompass(){
+        return positionCompass / 100d;
+    }
+    /** 高度計の表示位置指定(左右移動)を%値で返す。0.00～1.00の%値 */
+    public double getPositionHeight(){
+        return positionHeight / 100d;
+    }
+    /** 姿勢計の表示位置指定(左右移動)を%値で返す。0.00～1.00の%値 */
+    public double getPositionPitch(){
+        return positionPitch / 100d;
+    }
+    /** 速度計の表示位置指定(左右移動)を%値で返す。0.00～1.00の%値 */
+    public double getPositionSpeed(){
+        return positionSpeed / 100d;
     }
 
     /** コンストラクタ */
@@ -69,14 +101,14 @@ public class ModSettings {
 
             //show
             String showStr = prop.getProperty(ConfigFile.SHOW);
-            boolean showBool = showStr == null || showStr.length() == 0 || Boolean.parseBoolean(showStr);
+            boolean showBool = (showStr == null) || (showStr.length() == 0) || Boolean.parseBoolean(showStr);
             lg.debug("prop read: show : "+ showBool);
             this.showHUD = showBool;
 
             //interval
             String intervalStr = prop.getProperty(ConfigFile.PITCH_INTERVAL);
             lg.debug("prop read: interval : "+ intervalStr);
-            int intervalInt = 15;
+            int intervalInt = DefaultValue.interval;
             try{
                 intervalInt = Integer.parseInt(intervalStr);
             }catch(NumberFormatException e){
@@ -84,6 +116,50 @@ public class ModSettings {
                 successToRead = false;
             }
             this.interval = intervalInt;
+
+            //position
+            {
+                //position.compass
+                String compassPosStr = prop.getProperty(ConfigFile.COMPASS);
+                int compassDbl = DefaultValue.positionCompass;
+                try {
+                    compassDbl = Integer.parseInt(compassPosStr);
+                } catch (NumberFormatException e) {
+                    lg.warn("compass position is wrong value:" + compassPosStr);
+                    successToRead = false;
+                }
+                this.positionCompass = compassDbl;
+                //position.height
+                String heightPosStr = prop.getProperty(ConfigFile.HEIGHT);
+                int heightDbl = DefaultValue.positionHeight;
+                try {
+                    heightDbl = Integer.parseInt(heightPosStr);
+                } catch (NumberFormatException e) {
+                    lg.warn("height position is wrong value:" + heightPosStr);
+                    successToRead = false;
+                }
+                this.positionHeight = heightDbl;
+                //position.pitch
+                String pitchPosStr = prop.getProperty(ConfigFile.PITCH);
+                int pitchDbl = DefaultValue.positionPitch;
+                try {
+                    pitchDbl = Integer.parseInt(pitchPosStr);
+                } catch (NumberFormatException e) {
+                    lg.warn("pitch position is wrong value:" + pitchPosStr);
+                    successToRead = false;
+                }
+                this.positionPitch = pitchDbl;
+                //position.speed
+                String speedPosStr = prop.getProperty(ConfigFile.SPEED);
+                int speedDbl = DefaultValue.positionSpeed;
+                try {
+                    speedDbl = Integer.parseInt(speedPosStr);
+                } catch (NumberFormatException e) {
+                    lg.warn("speed position is wrong value:" + speedPosStr);
+                    successToRead = false;
+                }
+                this.positionSpeed = speedDbl;
+            }
 
         }catch(FileNotFoundException e){
             FlightHUDMod.getLogger().info("config file not found. create and save default props.");
@@ -121,6 +197,10 @@ public class ModSettings {
 
             writer.println(ConfigFile.SHOW + ":" + this.showHUD);
             writer.println(ConfigFile.PITCH_INTERVAL +":"+ this.interval);
+            writer.println(ConfigFile.COMPASS +":"+ this.positionCompass);
+            writer.println(ConfigFile.HEIGHT +":"+ this.positionHeight);
+            writer.println(ConfigFile.PITCH +":"+ this.positionPitch);
+            writer.println(ConfigFile.SPEED +":"+ this.positionSpeed);
 
         }
         catch(IOException e){
