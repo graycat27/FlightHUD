@@ -18,6 +18,7 @@ public class SpeedMeter extends GuiComponent {
     private IGuiValueDisplay horizonSpeedTextDisplay;
     private IGuiValueDisplay verticalSpeedTextDisplay;
     private IGuiValueDisplay actualSpeedTextDisplay;
+    private IGuiValueDisplay speedUnitDisplay;
 
     public SpeedMeter(){
         super();
@@ -37,8 +38,13 @@ public class SpeedMeter extends GuiComponent {
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.RIGHT;
 
+        String unitText = "[m/s]";
+        int unitWidth = mc.fontRenderer.getStringWidth(unitText);
+        TextHorizontalPosition unitPos = TextHorizontalPosition.LEFT;
+
         //init and display
-        horizonSpeedTextDisplay = new TextDisplay(posX + (width/3), basePosY, width,height, isVisible, text, hPos);
+        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos);
+        speedUnitDisplay = new TextDisplay(posX - width, basePosY, unitWidth, height, isVisible, unitText, unitPos);
 
         if(speed != null && speed.getVerticalSpeed() >= 0){
             //going UP
@@ -61,6 +67,7 @@ public class SpeedMeter extends GuiComponent {
         horizonSpeedTextDisplay.setVisible(true);
         verticalSpeedTextDisplay.setVisible(true);
         actualSpeedTextDisplay.setVisible(true);
+        speedUnitDisplay.setVisible(true);
     }
 
     @Override
