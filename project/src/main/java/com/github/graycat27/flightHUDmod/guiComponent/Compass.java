@@ -16,7 +16,8 @@ public class Compass extends GuiComponent {
     /** direction - player facing */
     private Direction direction = null;
 
-    private IGuiValueDisplay textDisplay;
+    private IGuiValueDisplay degreesDisplay;
+
     private String facingTextFormat = "%s";
 
     public Compass(){
@@ -36,12 +37,12 @@ public class Compass extends GuiComponent {
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
-        textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
+        degreesDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
     }
 
     @Override
     protected void drawDisplayComponent(){
-        textDisplay.setVisible(true);
+        degreesDisplay.setVisible(true);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Compass extends GuiComponent {
         direction = new Direction(intFlightDirection);
 
         initDisplayComponent();
-        textDisplay.setDispValue(String.format(facingTextFormat, direction.valToString()));
+        degreesDisplay.setDispValue(String.format(facingTextFormat, direction.valToString()));
     }
 
     @Override
