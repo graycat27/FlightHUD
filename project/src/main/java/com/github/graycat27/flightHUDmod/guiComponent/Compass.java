@@ -1,5 +1,6 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
+import com.github.graycat27.flightHUDmod.consts.CompassScaleValue;
 import com.github.graycat27.flightHUDmod.consts.DirectionValue;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
@@ -7,6 +8,9 @@ import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 方角（N-E-S-W 0-90-180-270-360）の描画
@@ -17,6 +21,7 @@ public class Compass extends GuiComponent {
     private Direction direction = null;
 
     private IGuiValueDisplay degreesDisplay;
+    private List<IGuiValueDisplay> scaleDisplayList;
 
     private String facingTextFormat = "%s";
 
@@ -38,6 +43,37 @@ public class Compass extends GuiComponent {
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
         degreesDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
+
+        //scale
+        scaleDisplayList = new ArrayList<>();
+        int halfWidthPx = windowWidth / 2;
+        double fov = mc.gameSettings.fov;
+        int widthDgr = (int)Math.round(halfWidthPx * fov / windowHeight);   //画面の半分の幅に収まる視野角
+
+        String bar = "-";
+        int charWidth = mc.fontRenderer.getStringWidth(bar);
+
+        StringBuilder scaleBuilder = new StringBuilder();
+        for(int i = 0; i < halfWidthPx/charWidth; i++){
+            scaleBuilder.append(bar);
+        }
+        text = scaleBuilder.toString();
+        width = mc.fontRenderer.getStringWidth(text);
+        IGuiValueDisplay barDisplay = new TextDisplay(posX, posY+(height*2), width, height, isVisible, text, hPos);
+        scaleDisplayList.add(barDisplay);
+
+        if(direction != null) {
+            double leftDegrees = direction.value() - widthDgr / 2.0;
+            double rightDegrees = direction.value() + widthDgr / 2.0;
+            CompassScaleValue leftCSVal = CompassScaleValue.getByDegrees(leftDegrees);
+            CompassScaleValue rightCSVal = CompassScaleValue.getByDegrees(rightDegrees);
+            for (CompassScaleValue v : CompassScaleValue.values()) {
+                //表示不要な方角は生成しない
+                //TODO make this
+
+            }
+        }
+
     }
 
     @Override
