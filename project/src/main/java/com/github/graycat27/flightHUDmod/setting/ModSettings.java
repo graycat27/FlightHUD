@@ -18,10 +18,10 @@ public class ModSettings {
     private static class DefaultValue{
         static boolean showHUD = true;
         static int interval = 15;
-        static double positionCompass = 0.3d;
-        static double positionHeight = 0.7d;
-        static double positionPitch = 0.5d;
-        static double positionSpeed = 0.3d;
+        static int positionCompass = 30;
+        static int positionHeight = 70;
+        static int positionPitch = 50;
+        static int positionSpeed = 30;
     }
 
     /** FlightHUDの表示ON/OFF */
@@ -56,21 +56,26 @@ public class ModSettings {
     }
 
     /* 表示位置 */
-    private double positionCompass = DefaultValue.positionCompass;
-    private double positionHeight = DefaultValue.positionHeight;
-    private double positionPitch = DefaultValue.positionPitch;
-    private double positionSpeed = DefaultValue.positionSpeed;
+    /** %値 */
+    private int positionCompass = DefaultValue.positionCompass;
+    private int positionHeight = DefaultValue.positionHeight;
+    private int positionPitch = DefaultValue.positionPitch;
+    private int positionSpeed = DefaultValue.positionSpeed;
+    /** Compassの表示位置指定(上下移動)を返す。0.00～1.00の%値 */
     public double getPositionCompass(){
-        return positionCompass;
+        return positionCompass / 100d;
     }
+    /** 高度計の表示位置指定(左右移動)を%値で返す。0.00～1.00の%値 */
     public double getPositionHeight(){
-        return positionHeight;
+        return positionHeight / 100d;
     }
+    /** 姿勢計の表示位置指定(左右移動)を%値で返す。0.00～1.00の%値 */
     public double getPositionPitch(){
-        return positionPitch;
+        return positionPitch / 100d;
     }
+    /** 速度計の表示位置指定(左右移動)を%値で返す。0.00～1.00の%値 */
     public double getPositionSpeed(){
-        return positionSpeed;
+        return positionSpeed / 100d;
     }
 
     /** コンストラクタ */
@@ -116,40 +121,40 @@ public class ModSettings {
             {
                 //position.compass
                 String compassPosStr = prop.getProperty(ConfigFile.COMPASS);
-                double compassDbl = DefaultValue.positionCompass;
+                int compassDbl = DefaultValue.positionCompass;
                 try {
-                    compassDbl = Double.parseDouble(compassPosStr);
-                } catch (NullPointerException | NumberFormatException e) {
+                    compassDbl = Integer.parseInt(compassPosStr);
+                } catch (NumberFormatException e) {
                     lg.warn("compass position is wrong value:" + compassPosStr);
                     successToRead = false;
                 }
                 this.positionCompass = compassDbl;
                 //position.height
                 String heightPosStr = prop.getProperty(ConfigFile.HEIGHT);
-                double heightDbl = DefaultValue.positionHeight;
+                int heightDbl = DefaultValue.positionHeight;
                 try {
-                    heightDbl = Double.parseDouble(heightPosStr);
-                } catch (NullPointerException | NumberFormatException e) {
+                    heightDbl = Integer.parseInt(heightPosStr);
+                } catch (NumberFormatException e) {
                     lg.warn("height position is wrong value:" + heightPosStr);
                     successToRead = false;
                 }
                 this.positionHeight = heightDbl;
                 //position.pitch
                 String pitchPosStr = prop.getProperty(ConfigFile.PITCH);
-                double pitchDbl = DefaultValue.positionPitch;
+                int pitchDbl = DefaultValue.positionPitch;
                 try {
-                    pitchDbl = Double.parseDouble(pitchPosStr);
-                } catch (NullPointerException | NumberFormatException e) {
+                    pitchDbl = Integer.parseInt(pitchPosStr);
+                } catch (NumberFormatException e) {
                     lg.warn("pitch position is wrong value:" + pitchPosStr);
                     successToRead = false;
                 }
                 this.positionPitch = pitchDbl;
                 //position.speed
                 String speedPosStr = prop.getProperty(ConfigFile.SPEED);
-                double speedDbl = DefaultValue.positionSpeed;
+                int speedDbl = DefaultValue.positionSpeed;
                 try {
-                    speedDbl = Double.parseDouble(speedPosStr);
-                } catch (NullPointerException | NumberFormatException e) {
+                    speedDbl = Integer.parseInt(speedPosStr);
+                } catch (NumberFormatException e) {
                     lg.warn("speed position is wrong value:" + speedPosStr);
                     successToRead = false;
                 }
