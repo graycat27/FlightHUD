@@ -25,7 +25,7 @@ public class ModSettings {
     }
 
     /** FlightHUDの表示ON/OFF */
-    private boolean showHUD = true;
+    private boolean showHUD = DefaultValue.showHUD;
     public boolean isShowHud(){
         return showHUD;
     }
@@ -35,7 +35,7 @@ public class ModSettings {
     }
 
     /** 姿勢計のゲージ間隔 */
-    private int interval = 15;
+    private int interval = DefaultValue.interval;
     private final int CHANGE_INTERVAL = 5;
     private final int MAX_INTERVAL = Pitch.UP / 2;
     private final int MIN_INTERVAL = Pitch.LEVEL;
@@ -96,14 +96,14 @@ public class ModSettings {
 
             //show
             String showStr = prop.getProperty(ConfigFile.SHOW);
-            boolean showBool = showStr == null || showStr.length() == 0 || Boolean.parseBoolean(showStr);
+            boolean showBool = (showStr == null) || (showStr.length() == 0) || Boolean.parseBoolean(showStr);
             lg.debug("prop read: show : "+ showBool);
             this.showHUD = showBool;
 
             //interval
             String intervalStr = prop.getProperty(ConfigFile.PITCH_INTERVAL);
             lg.debug("prop read: interval : "+ intervalStr);
-            int intervalInt = 15;
+            int intervalInt = DefaultValue.interval;
             try{
                 intervalInt = Integer.parseInt(intervalStr);
             }catch(NumberFormatException e){
