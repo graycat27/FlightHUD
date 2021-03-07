@@ -37,14 +37,14 @@ public class Compass extends GuiComponent {
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
-        int posX = windowWidth / 2;
+        final int centerPosX = windowWidth / 2;
         int posY = (int)(windowHeight * modSettings.getPositionCompass());
         int width = mc.fontRenderer.getStringWidth("360");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
-        degreesDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
+        degreesDisplay = new TextDisplay(centerPosX, posY, width, height, isVisible, text, hPos);
 
         //scale
         scaleDisplayList = new ArrayList<>();
@@ -61,17 +61,35 @@ public class Compass extends GuiComponent {
         }
         text = scaleBuilder.toString();
         width = mc.fontRenderer.getStringWidth(text);
-        IGuiValueDisplay barDisplay = new TextDisplay(posX, posY+(height*2), width, height, isVisible, text, hPos);
-        scaleDisplayList.add(barDisplay);
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+(height*2), width, height, isVisible, text, hPos));
 
         if(direction != null) {
-            double leftDegrees = direction.value() - widthDgr / 2.0;
-            double rightDegrees = direction.value() + widthDgr / 2.0;
-            CompassScaleValue leftCSVal = CompassScaleValue.getByDegrees(leftDegrees);
-            CompassScaleValue rightCSVal = CompassScaleValue.getByDegrees(rightDegrees);
+            final double leftDirection = direction.value() - widthDgr / 2.0;
+            final double rightDirection = direction.value() + widthDgr / 2.0;
+
+            final double pxParDgr = windowHeight / fov;
+
             for (CompassScaleValue v : CompassScaleValue.values()) {
                 //表示不要な方角は生成しない
-                //TODO make this
+                if(leftDirection < rightDirection){
+                    // 0 - left - v - right - 360
+                    if(leftDirection <= v.value() && v.value() <= rightDirection) {
+                        int deltaX = (int)((direction.value() - v.value())* pxParDgr);
+                        text = v.toString();
+                        width = mc.fontRenderer.getStringWidth(text);
+                        scaleDisplayList.add(new TextDisplay(centerPosX+deltaX, posY + height,
+                                width, height, isVisible, text, hPos));
+                    }
+                }else{
+                    // left - v - 360 - v - right
+                    if(leftDirection <= v.value() || v.value() <= rightDirection){
+                        int deltaX = (int)((direction.value() - v.value())* pxParDgr);
+                        text = v.toString();
+                        width = mc.fontRenderer.getStringWidth(text);
+                        scaleDisplayList.add(new TextDisplay(centerPosX+deltaX, posY + height,
+                                width, height, isVisible, text, hPos));
+                    }
+                }
 
             }
         }
