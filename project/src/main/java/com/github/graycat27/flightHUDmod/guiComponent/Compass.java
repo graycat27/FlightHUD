@@ -74,19 +74,19 @@ public class Compass extends GuiComponent {
                 if(leftDirection < rightDirection){
                     // 0 - left - v - right - 360
                     if(leftDirection <= v.value() && v.value() <= rightDirection) {
-                        int deltaX = (int)((direction.value() - v.value())* pxParDgr);
+                        int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                         text = v.toString();
                         width = mc.fontRenderer.getStringWidth(text);
-                        scaleDisplayList.add(new TextDisplay(centerPosX+deltaX, posY + height,
+                        scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                                 width, height, isVisible, text, hPos));
                     }
                 }else{
                     // left - v - 360 - v - right
                     if(leftDirection <= v.value() || v.value() <= rightDirection){
-                        int deltaX = (int)((direction.value() - v.value())* pxParDgr);
+                        int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                         text = v.toString();
                         width = mc.fontRenderer.getStringWidth(text);
-                        scaleDisplayList.add(new TextDisplay(centerPosX+deltaX, posY + height,
+                        scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                                 width, height, isVisible, text, hPos));
                     }
                 }
