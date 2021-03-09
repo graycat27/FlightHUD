@@ -78,6 +78,10 @@ public class Compass extends GuiComponent {
                     width = mc.fontRenderer.getStringWidth(text);
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos));
+                    text = "+";
+                    width =mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                            width, height, isVisible, text, hPos));
                     continue;
                 }
                 if(leftDirection - Direction.ROUND <= v.value() && v.value() < rightDirection - Direction.ROUND){
@@ -86,6 +90,10 @@ public class Compass extends GuiComponent {
                     width = mc.fontRenderer.getStringWidth(text);
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos));
+                    text = "+";
+                    width =mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                            width, height, isVisible, text, hPos));
                     continue;
                 }
                 if(leftDirection + Direction.ROUND <= v.value() && v.value() < rightDirection + Direction.ROUND){
@@ -93,6 +101,10 @@ public class Compass extends GuiComponent {
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    text = "+";
+                    width =mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
                             width, height, isVisible, text, hPos));
                     continue;
                 }
