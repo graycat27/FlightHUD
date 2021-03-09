@@ -72,43 +72,30 @@ public class Compass extends GuiComponent {
 
             for (CompassScaleValue v : CompassScaleValue.values()) {
                 //表示不要な方角は生成しない
-                if(0 < leftDirection){
-                    // 0 - left - v - right
-                    if(leftDirection <= v.value() && v.value() <= rightDirection) {
-                        int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
-                        text = v.toString();
-                        width = mc.fontRenderer.getStringWidth(text);
-                        scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                                width, height, isVisible, text, hPos));
-                        continue;
-                    }
-                    if(leftDirection - Direction.ROUND <= v.value() && v.value() < rightDirection - Direction.ROUND){
-                        int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
-                        text = v.toString();
-                        width = mc.fontRenderer.getStringWidth(text);
-                        scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                                width, height, isVisible, text, hPos));
-                        continue;
-                    }
-                }else{
-                    // left - v - 360 - v - right
-                    if(v.value() <= rightDirection){
-                        int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
-                        text = v.toString();
-                        width = mc.fontRenderer.getStringWidth(text);
-                        scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                                width, height, isVisible, text, hPos));
-                        continue;
-                    }
-                    if(leftDirection + Direction.ROUND <= v.value()){
-                        int deltaX = (int)((v.value() - Direction.ROUND - direction.value()) * pxParDgr);
-                        text = v.toString();
-                        width = mc.fontRenderer.getStringWidth(text);
-                        scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                                width, height, isVisible, text, hPos));
-                    }
+                if(leftDirection <= v.value() && v.value() <= rightDirection) {
+                    int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
+                    text = v.toString();
+                    width = mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    continue;
                 }
-
+                if(leftDirection - Direction.ROUND <= v.value() && v.value() < rightDirection - Direction.ROUND){
+                    int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
+                    text = v.toString();
+                    width = mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    continue;
+                }
+                if(leftDirection + Direction.ROUND <= v.value() && v.value() < rightDirection + Direction.ROUND){
+                    int deltaX = (int)((v.value() - direction.value() - Direction.ROUND) * pxParDgr);
+                    text = v.toString();
+                    width = mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    continue;
+                }
             }
         }
 
