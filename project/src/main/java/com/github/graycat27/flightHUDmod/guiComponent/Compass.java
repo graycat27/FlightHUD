@@ -74,7 +74,6 @@ public class Compass extends GuiComponent {
                 //表示不要な方角は生成しない
                 if(0 < leftDirection){
                     // 0 - left - v - right
-                    FlightHUDMod.getLogger().debug("debug me:"+ v.value() +","+ leftDirection +"～"+rightDirection);
                     if(leftDirection <= v.value() && v.value() <= rightDirection) {
                         int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                         text = v.toString();
@@ -91,7 +90,6 @@ public class Compass extends GuiComponent {
                                 width, height, isVisible, text, hPos));
                         continue;
                     }
-                    FlightHUDMod.getLogger().debug(v.value() +" not shown");
                 }else{
                     // left - v - 360 - v - right
                     if(v.value() <= rightDirection){
