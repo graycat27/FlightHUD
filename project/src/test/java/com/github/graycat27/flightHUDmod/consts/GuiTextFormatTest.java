@@ -1,9 +1,9 @@
-import com.github.graycat27.flightHUDmod.consts.GuiTextFormat;
-import com.github.graycat27.flightHUDmod.unit.Pitch;
+package com.github.graycat27.flightHUDmod.consts;
+
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OutputTest {
+public class GuiTextFormatTest {
 
     @Test
     public void testFloatStr3f() {
