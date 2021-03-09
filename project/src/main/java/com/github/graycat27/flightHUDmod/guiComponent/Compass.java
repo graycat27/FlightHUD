@@ -64,6 +64,11 @@ public class Compass extends GuiComponent {
         width = mc.fontRenderer.getStringWidth(text);
         scaleDisplayList.add(new TextDisplay(centerPosX, posY+(height*2), width, height, isVisible, text, hPos));
 
+        //中心マーク
+        text = "‡";
+        width = mc.fontRenderer.getStringWidth(text);
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+(height*2), width, height, isVisible, text, hPos));
+
         if(direction != null) {
             final double leftDirection = direction.value() - widthDgr / 2.0;
             final double rightDirection = direction.value() + widthDgr / 2.0;
