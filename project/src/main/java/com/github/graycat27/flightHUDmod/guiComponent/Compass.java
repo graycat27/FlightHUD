@@ -45,7 +45,7 @@ public class Compass extends GuiComponent {
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
-        degreesDisplay = new TextDisplay(centerPosX, posY, width, height, isVisible, text, hPos);
+        degreesDisplay = new TextDisplay(centerPosX, posY + 2*height, width, height, isVisible, text, hPos);
 
         //scale
         scaleDisplayList = new ArrayList<>();
@@ -62,12 +62,12 @@ public class Compass extends GuiComponent {
         }
         text = scaleBuilder.toString();
         width = mc.fontRenderer.getStringWidth(text);
-        scaleDisplayList.add(new TextDisplay(centerPosX, posY+(height*2), width, height, isVisible, text, hPos));
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos));
 
         //中心マーク
         text = "‡";
         width = mc.fontRenderer.getStringWidth(text);
-        scaleDisplayList.add(new TextDisplay(centerPosX, posY+(height*2), width, height, isVisible, text, hPos));
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos));
 
         if(direction != null) {
             final double leftDirection = direction.value() - widthDgr / 2.0;
@@ -81,11 +81,11 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
-                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
-                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos));
                     continue;
                 }
@@ -93,11 +93,11 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
-                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
-                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos));
                     continue;
                 }
@@ -105,11 +105,11 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value() - Direction.ROUND) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
-                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
-                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos));
                     continue;
                 }
