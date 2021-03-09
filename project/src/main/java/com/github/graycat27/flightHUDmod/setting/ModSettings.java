@@ -18,10 +18,10 @@ public class ModSettings {
     private static class DefaultValue{
         static boolean showHUD = true;
         static int interval = 15;
-        static int positionCompass = 30;
-        static int positionHeight = 70;
+        static int positionCompass = 25;
+        static int positionHeight = 73;
         static int positionPitch = 50;
-        static int positionSpeed = 30;
+        static int positionSpeed = 27;
     }
 
     /** FlightHUDの表示ON/OFF */

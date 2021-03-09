@@ -21,13 +21,13 @@ public class Direction implements IUnit {
         this.direction = direction;
     }
 
-    public int getDirection(){
+    public int value(){
         return direction;
     }
 
     @Override
     public String valToString(){
-        return String.format("%03d", getDirection());
+        return String.format("%03d", value());
     }
 
     @Override

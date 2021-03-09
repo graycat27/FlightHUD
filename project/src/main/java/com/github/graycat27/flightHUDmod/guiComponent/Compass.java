@@ -1,5 +1,7 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
+import com.github.graycat27.flightHUDmod.FlightHUDMod;
+import com.github.graycat27.flightHUDmod.consts.CompassScaleValue;
 import com.github.graycat27.flightHUDmod.consts.DirectionValue;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
@@ -10,6 +12,9 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 
 import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 方角（N-E-S-W 0-90-180-270-360）の描画
  */
@@ -18,7 +23,9 @@ public class Compass extends GuiComponent {
     /** direction - player facing */
     private Direction direction = null;
 
-    private IGuiValueDisplay textDisplay;
+    private IGuiValueDisplay degreesDisplay;
+    private List<IGuiValueDisplay> scaleDisplayList;
+
     private String facingTextFormat = "%s";
 
     public Compass(){
@@ -31,19 +38,84 @@ public class Compass extends GuiComponent {
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
-        int posX = windowWidth / 2;
+        final int centerPosX = windowWidth / 2;
         int posY = (int)(windowHeight * modSettings.getPositionCompass());
         int width = mc.fontRenderer.getStringWidth("360");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
-        textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
+        degreesDisplay = new TextDisplay(centerPosX, posY, width, height, isVisible, text, hPos);
+
+        //scale
+        scaleDisplayList = new ArrayList<>();
+        int halfWidthPx = windowWidth / 2;
+        double fov = mc.gameSettings.fov;
+        int widthDgr = (int)Math.round(halfWidthPx * fov / windowHeight);   //画面の半分の幅に収まる視野角
+
+        String bar = "-";
+        int charWidth = mc.fontRenderer.getStringWidth(bar);
+
+        StringBuilder scaleBuilder = new StringBuilder();
+        for(int i = 0; i < halfWidthPx/charWidth; i++){
+            scaleBuilder.append(bar);
+        }
+        text = scaleBuilder.toString();
+        width = mc.fontRenderer.getStringWidth(text);
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+(height*2), width, height, isVisible, text, hPos));
+
+        if(direction != null) {
+            final double leftDirection = direction.value() - widthDgr / 2.0;
+            final double rightDirection = direction.value() + widthDgr / 2.0;
+
+            final double pxParDgr = windowHeight / fov;
+
+            for (CompassScaleValue v : CompassScaleValue.values()) {
+                //表示不要な方角は生成しない
+                if(leftDirection <= v.value() && v.value() <= rightDirection) {
+                    int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
+                    text = v.toString();
+                    width = mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    text = "+";
+                    width =mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                            width, height, isVisible, text, hPos));
+                    continue;
+                }
+                if(leftDirection - Direction.ROUND <= v.value() && v.value() < rightDirection - Direction.ROUND){
+                    int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
+                    text = v.toString();
+                    width = mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    text = "+";
+                    width =mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                            width, height, isVisible, text, hPos));
+                    continue;
+                }
+                if(leftDirection + Direction.ROUND <= v.value() && v.value() < rightDirection + Direction.ROUND){
+                    int deltaX = (int)((v.value() - direction.value() - Direction.ROUND) * pxParDgr);
+                    text = v.toString();
+                    width = mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
+                            width, height, isVisible, text, hPos));
+                    text = "+";
+                    width =mc.fontRenderer.getStringWidth(text);
+                    scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + 2*height,
+                            width, height, isVisible, text, hPos));
+                    continue;
+                }
+            }
+        }
+
     }
 
     @Override
     protected void drawDisplayComponent(){
-        textDisplay.setVisible(true);
+        degreesDisplay.setVisible(true);
     }
 
     @Override
@@ -67,7 +139,7 @@ public class Compass extends GuiComponent {
         direction = new Direction(intFlightDirection);
 
         initDisplayComponent();
-        textDisplay.setDispValue(String.format(facingTextFormat, direction.valToString()));
+        degreesDisplay.setDispValue(String.format(facingTextFormat, direction.valToString()));
     }
 
     @Override
