@@ -108,7 +108,7 @@ public class PitchMeter extends GuiComponent {
                 double actualSpeedAngleRad = Math.atan(speed.getVerticalSpeed() / speed.getHorizonSpeed());
                 flightDegrees = (int) Math.toDegrees(actualSpeedAngleRad);
             }else {
-                flightDegrees = speed.getVerticalSpeed() == 0 ? 0 : (speed.getVerticalSpeed() > 0) ? 90 : -90;
+                flightDegrees = speed.getVerticalSpeed() == 0 ? Pitch.LEVEL : (speed.getVerticalSpeed() > 0) ? Pitch.UP : Pitch.DOWN;
             }
 
             double delta = Math.toRadians(flightDegrees - pitch.value());
