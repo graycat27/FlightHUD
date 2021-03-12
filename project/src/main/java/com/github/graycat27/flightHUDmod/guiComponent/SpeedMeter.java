@@ -80,14 +80,7 @@ public class SpeedMeter extends GuiComponent {
             return;
         }
 
-        Entity speedTarget = player;
-        Entity ridden = speedTarget.getRidingEntity();
-        while(ridden != null){
-            speedTarget = ridden;
-            ridden = ridden.getRidingEntity();
-        }
-
-        speed = new Speed(speedTarget);
+        speed = new Speed(player);
 
         initDisplayComponent();
         horizonSpeedTextDisplay.setDispValue(speed.getHorizonSpeedValStr() +"→");
