@@ -1,7 +1,6 @@
 package com.github.graycat27.flightHUDmod.unit;
 
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.util.math.vector.Vector3d;
 
 import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr3f;
 
@@ -31,11 +30,13 @@ public class Speed implements IUnit {
             throw new IllegalArgumentException("player is null", new NullPointerException());
         }
 
-        Vector3d v3d = player.getMotion();
+        double deltaX = player.getPosX() - player.lastTickPosX;
+        double deltaZ = player.getPosZ() - player.lastTickPosZ;
+        double deltaY = player.getPosY() - player.lastTickPosY;
 
-        double horizonSpeed = calcSpeed(v3d.getX(), v3d.getZ());
-        double verticalSpeed = calcSpeed(v3d.getY());
-        if(v3d.getY() < 0){
+        double horizonSpeed = calcSpeed(deltaX, deltaZ);
+        double verticalSpeed = calcSpeed(deltaY);
+        if(deltaY < 0){
             verticalSpeed *= (-1);  //calcSpeed() always returns positive Val
         }
 
