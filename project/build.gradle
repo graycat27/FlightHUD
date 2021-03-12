@@ -18,7 +18,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-version = '1.2.4'
+version = '1.2.5'
 group = 'com.github.gray27.flighthudmod'
 archivesBaseName = 'flighthudmod'
 
