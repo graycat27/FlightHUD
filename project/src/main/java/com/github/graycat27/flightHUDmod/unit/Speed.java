@@ -30,9 +30,9 @@ public class Speed implements IUnit {
             throw new IllegalArgumentException("player is null", new NullPointerException());
         }
 
-        double deltaX = player.lastTickPosX - player.getPosX();
-        double deltaZ = player.lastTickPosZ - player.getPosZ();
-        double deltaY = player.lastTickPosY - player.getPosY();
+        double deltaX = player.getPosX() - player.lastTickPosX;
+        double deltaZ = player.getPosZ() - player.lastTickPosZ;
+        double deltaY = player.getPosY() - player.lastTickPosY;
 
         double horizonSpeed = calcSpeed(deltaX, deltaZ);
         double verticalSpeed = calcSpeed(deltaY);
