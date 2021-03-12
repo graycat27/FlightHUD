@@ -1,6 +1,5 @@
 package com.github.graycat27.flightHUDmod.unit;
 
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 
 import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr3f;
