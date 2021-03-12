@@ -1,9 +1,12 @@
 package com.github.graycat27.flightHUDmod.guiComponent;
 
+import com.github.graycat27.flightHUDmod.FlightHUDGUIController;
+import com.github.graycat27.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.flightHUDmod.consts.TextHorizontalPosition;
 import com.github.graycat27.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.flightHUDmod.unit.Speed;
+import com.github.graycat27.flightHUDmod.util.CustomFontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
@@ -61,6 +64,8 @@ public class SpeedMeter extends GuiComponent {
             actualSpeedTextDisplay = new TextDisplay(posX + width*2/3, basePosY + (int)(2.5*height),
                     width, height, isVisible, text, hPos);
         }
+
+        FlightHUDMod.getGuiController().getFontManager().getFontFromResource();
 
     }
 

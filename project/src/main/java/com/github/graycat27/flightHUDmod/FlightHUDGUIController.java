@@ -5,14 +5,26 @@ import com.github.graycat27.flightHUDmod.unit.Direction;
 import com.github.graycat27.flightHUDmod.unit.Height;
 import com.github.graycat27.flightHUDmod.unit.Pitch;
 import com.github.graycat27.flightHUDmod.unit.Speed;
+import com.github.graycat27.flightHUDmod.util.CustomFontManager;
+import net.minecraft.util.datafix.fixes.CustomNameStringToComponentEntity;
 
 public class FlightHUDGUIController {
+
+    private CustomFontManager fontManager;
+    public CustomFontManager getFontManager(){
+        return fontManager;
+    }
 
     private Compass compass;
     private HeightMeter heightMeter;
     private PitchMeter pitchMeter;
     private SpeedMeter speedMeter;
     private Warning warning;
+
+    /** コンストラクタ */
+    public FlightHUDGUIController(){
+        fontManager = new CustomFontManager();
+    }
 
     //HUDの各部品を一括で制御する
     public void showAllComponent(){
