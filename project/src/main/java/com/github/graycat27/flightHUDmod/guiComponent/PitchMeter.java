@@ -108,10 +108,17 @@ public class PitchMeter extends GuiComponent {
                 double actualSpeedAngleRad = Math.atan(speed.getVerticalSpeed() / speed.getHorizonSpeed());
                 flightDegrees = (int) Math.toDegrees(actualSpeedAngleRad);
             }else {
-                flightDegrees = (speed.getVerticalSpeed() >= 0) ? 90 : -90;
+                flightDegrees = speed.getVerticalSpeed() == 0 ? Pitch.LEVEL : (speed.getVerticalSpeed() > 0) ? Pitch.UP : Pitch.DOWN;
             }
 
-            double delta = Math.toRadians(flightDegrees - pitch.value());
+            int deltaDgr = flightDegrees - pitch.value();
+            if(deltaDgr > Pitch.UP){
+                deltaDgr = Pitch.UP;
+            }
+            if(deltaDgr < Pitch.DOWN){
+                deltaDgr = Pitch.DOWN;
+            }   //90～180のtan値は逆符号になってしまい、表示したい位置と異なってしまう
+            double delta = Math.toRadians(deltaDgr);
             levelY = (windowHeight / 2.0) * Math.tan(delta) / Math.tan(Math.toRadians(fov / 2));
             //ウィンドウ視野内に必ず描画する
             if(levelY < windowHeight / -2.0 + height){
