@@ -2,7 +2,7 @@ package com.github.graycat27.flightHUDmod.unit;
 
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
-import static com.github.graycat27.flightHUDmod.guiComponent.PitchMeter.getDgrString;
+import static com.github.graycat27.flightHUDmod.guiComponent.PitchMeter.getDgrStringDecimal1;
 
 public class Pitch implements IUnit {
 
@@ -15,7 +15,7 @@ public class Pitch implements IUnit {
     public static final int UP = 90;
 
     /** 内部管理変数。仰俯角。下向きが正 */
-    private int pitch;
+    private float pitch;
 
     /** コンストラクタ<br>
      * @throws IllegalArgumentException player must not be null. pitch must in -90 to 90 */
@@ -26,26 +26,25 @@ public class Pitch implements IUnit {
 
         //プレイヤーの向いている仰俯角を算出
         /* playerPitch = LEVELを0として、下を正とした回転角度 */
-        float playerPitch = player.rotationPitch;
-        int intFlightPitch = Math.round((-1)*playerPitch);
-        if( intFlightPitch < DOWN || UP < intFlightPitch){
+        float playerPitch = (-1)*player.rotationPitch;
+        if( playerPitch < DOWN || UP < playerPitch){
             //must between -90to90
             throw new IllegalArgumentException("direction must in -90to90 but was "+ pitch);
         }
-        this.pitch = intFlightPitch;
+        this.pitch = playerPitch;
     }
 
-    private Pitch(int pitch){
+    private Pitch(float pitch){
         this.pitch = pitch;
     }
 
-    public int value(){
+    public float value(){
         return pitch;
     }
 
     @Override
     public String valToString(){
-        return getDgrString(pitch);
+        return getDgrStringDecimal1(pitch);
     }
 
     @Override

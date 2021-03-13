@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.pitchStr;
+import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.pitchStrDecimal;
 import static com.github.graycat27.flightHUDmod.FlightHUDMod.modSettings;
 
 /**
@@ -49,7 +50,7 @@ public class PitchMeter extends GuiComponent {
         int centerY = windowHeight / 2;
 
         //center display
-        int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, getDgrString(Pitch.UP)));
+        int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, getDgrStringDecimal1(Pitch.UP)));
         int markWidth = mc.fontRenderer.getStringWidth(Line.mark);
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = this.isDisplayed();
@@ -102,16 +103,16 @@ public class PitchMeter extends GuiComponent {
         //movement marker
         Speed speed = FlightHUDMod.getGuiController().getSpeed();
         if(speed != null){
-            int flightDegrees;
+            float flightDegrees;
             double levelY;
             if(speed.getHorizonSpeed() != 0) {
                 double actualSpeedAngleRad = Math.atan(speed.getVerticalSpeed() / speed.getHorizonSpeed());
-                flightDegrees = (int) Math.toDegrees(actualSpeedAngleRad);
+                flightDegrees = (float) Math.toDegrees(actualSpeedAngleRad);
             }else {
                 flightDegrees = speed.getVerticalSpeed() == 0 ? Pitch.LEVEL : (speed.getVerticalSpeed() > 0) ? Pitch.UP : Pitch.DOWN;
             }
 
-            int deltaDgr = flightDegrees - pitch.value();
+            float deltaDgr = flightDegrees - pitch.value();
             if(deltaDgr > Pitch.UP){
                 deltaDgr = Pitch.UP;
             }
@@ -128,7 +129,7 @@ public class PitchMeter extends GuiComponent {
                 levelY = windowHeight / 2.0 - height;
             }
 
-            String flightPitch = getDgrString(flightDegrees);
+            String flightPitch = getDgrStringDecimal1(flightDegrees);
             String flightPitchText = String.format("> %s <", flightPitch);
             int width = mc.fontRenderer.getStringWidth(flightPitchText);
             speedPitchTextDisplay = new TextDisplay(posX, (int)(centerY - levelY),
@@ -141,6 +142,12 @@ public class PitchMeter extends GuiComponent {
     public static String getDgrString(int pitchValue){
         if(pitchValue != Pitch.LEVEL) {
             return String.format(pitchStr, pitchValue);
+        }
+        return " "+ pitchValue + Pitch.DEGREES;
+    }
+    public static String getDgrStringDecimal1(float pitchValue){
+        if(pitchValue != Pitch.LEVEL) {
+            return String.format(pitchStrDecimal, pitchValue);
         }
         return " "+ pitchValue + Pitch.DEGREES;
     }
