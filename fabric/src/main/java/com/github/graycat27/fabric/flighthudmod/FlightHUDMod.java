@@ -1,10 +1,8 @@
 package com.github.graycat27.fabric.flighthudmod;
 
-import com.github.graycat27.fabric.flighthudmod.handler.KeyInputHandler;
+import com.github.graycat27.fabric.flighthudmod.handler.fml.FmlKeyInputHandler;
 import com.github.graycat27.fabric.flighthudmod.setting.ModSettings;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.WindowEventHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +27,6 @@ public class FlightHUDMod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        KeyInputHandler.registerBindings();
+        FmlKeyInputHandler.registerBindings();
     }
 }
