@@ -129,7 +129,8 @@ public class PitchMeter extends GuiComponent {
                 levelY = windowHeight / 2.0 - height;
             }
 
-            String flightPitch = getDgrStringDecimal1(flightDegrees);
+            String flightPitch = (-0.1f < flightDegrees && flightDegrees < 0.1f) ?
+                    getDgrString((int)flightDegrees) : getDgrStringDecimal1(flightDegrees);
             String flightPitchText = String.format("> %s <", flightPitch);
             int width = mc.fontRenderer.getStringWidth(flightPitchText);
             speedPitchTextDisplay = new TextDisplay(posX, (int)(centerY - levelY),
