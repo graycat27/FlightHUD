@@ -2,7 +2,7 @@ package com.github.graycat27.flightHUDmod.unit;
 
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
-import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr3f;
+import static com.github.graycat27.flightHUDmod.consts.GuiTextFormat.floatStr1f;
 
 public class Speed implements IUnit {
 
@@ -84,7 +84,7 @@ public class Speed implements IUnit {
         return actualSpeed;
     }
     public String getActualSpeedValStr(){
-        return String.format(floatStr3f, actualSpeed);
+        return String.format(floatStr1f, actualSpeed);
     }
 
     /** 水平速度を返す */
@@ -92,7 +92,7 @@ public class Speed implements IUnit {
         return horizonSpeed;
     }
     public String getHorizonSpeedValStr(){
-        return String.format(floatStr3f, horizonSpeed);
+        return String.format(floatStr1f, horizonSpeed);
     }
 
     /** 鉛直速度を返す */
@@ -100,7 +100,7 @@ public class Speed implements IUnit {
         return verticalSpeed;
     }
     public String getVerticalSpeedValStr(){
-        return String.format(floatStr3f, verticalSpeed);
+        return String.format(floatStr1f, verticalSpeed);
     }
 
     @Override

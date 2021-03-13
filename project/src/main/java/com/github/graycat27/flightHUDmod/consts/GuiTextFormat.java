@@ -7,6 +7,9 @@ import static com.github.graycat27.flightHUDmod.unit.Pitch.DEGREES;
  */
 public class GuiTextFormat {
 
+    /** 1,234.5 from Float */
+    public static final String floatStr1f = "%,.1f";
+
     /** 1,234.568 from Float */
     public static final String floatStr3f = "%,.3f";
 
