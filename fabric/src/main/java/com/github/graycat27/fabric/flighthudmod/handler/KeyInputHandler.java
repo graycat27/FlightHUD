@@ -6,9 +6,10 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.client.resource.language.I18n;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,9 +23,9 @@ public class KeyInputHandler {
     private static final String KEY_MAP_CATEGORY = "Flight HUD Mod";
 
     private static final KeyBinding TRIGGER_SHOW_ON =
-            new KeyBinding(new TranslatableText("flightHud.keyBind.description.show").getString(), GLFW_KEY_H, KEY_MAP_CATEGORY);
+            new KeyBinding(I18n.translate("flightHud.keyBind.description.show"), GLFW_KEY_H, KEY_MAP_CATEGORY);
     private static final KeyBinding CHANGE_INTERVAL =
-            new KeyBinding(new TranslatableText("flightHud.keyBind.description.interval").getString(), GLFW_KEY_J, KEY_MAP_CATEGORY);
+            new KeyBinding(I18n.translate("flightHud.keyBind.description.interval"), GLFW_KEY_J, KEY_MAP_CATEGORY);
 
     public static void registerBindings(){
         KeyBindingHelper.registerKeyBinding(KeyInputHandler.TRIGGER_SHOW_ON);
