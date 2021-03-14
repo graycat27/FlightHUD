@@ -46,6 +46,10 @@ public class PitchMeter extends GuiComponent {
         int windowWidth = mc.getMainWindow().getScaledWidth();
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
+        /* このposYから3*heightはNG */
+        int denyPosYTop = Compass.getDisplayPosY() - mc.fontRenderer.FONT_HEIGHT/2;
+        int denyPosYBottom = denyPosYTop + 3*mc.fontRenderer.FONT_HEIGHT;
+
         int posX = (int)(windowWidth * modSettings.getPositionPitch());
         int centerY = windowHeight / 2;
 
@@ -86,13 +90,19 @@ public class PitchMeter extends GuiComponent {
                     double levelY = (windowHeight/2.0)  * Math.tan(Math.toRadians(dgr - pitch.value()))
                             / Math.tan(Math.toRadians(fov/2));
 
+                    int dispPosY = (int)(centerY - levelY);
+                    if(denyPosYTop <= dispPosY && dispPosY <= denyPosYBottom){
+                        //コンパスと描画が重なるものは除く
+                        continue;
+                    }
+
                     String angleText = String.format(Line.angleText, getDgrString(dgr));
                     if((height) > 2 * Math.abs(levelY) ){
                         angleText = angleText.substring(0, angleText.length()-2);
                         angleText += "   ";
                     }
                     int width = mc.fontRenderer.getStringWidth(angleText);
-                    IGuiValueDisplay angleDisplay = new TextDisplay(posX, (int)(centerY - levelY),
+                    IGuiValueDisplay angleDisplay = new TextDisplay(posX, dispPosY,
                             width, height, isVisible, angleText, hPos);
                     degreesMarkTextDisplays.add(angleDisplay);
 

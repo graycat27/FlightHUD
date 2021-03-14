@@ -38,7 +38,7 @@ public class Compass extends GuiComponent {
         int windowHeight = mc.getMainWindow().getScaledHeight();
 
         final int centerPosX = windowWidth / 2;
-        int posY = (int)(windowHeight * modSettings.getPositionCompass());
+        int posY = getDisplayPosY();
         int width = mc.fontRenderer.getStringWidth("360");
         int height = mc.fontRenderer.FONT_HEIGHT;
         boolean isVisible = this.isDisplayed();
@@ -115,6 +115,15 @@ public class Compass extends GuiComponent {
             }
         }
 
+    }
+
+    /**
+     * 描画する画面上のy位置を取得。<br>
+     * Compassはここから +3 font_height分の高さを持つ
+     * @return
+     */
+    public static int getDisplayPosY(){
+        return (int)(Minecraft.getInstance().getMainWindow().getScaledHeight() * modSettings.getPositionCompass());
     }
 
     @Override
