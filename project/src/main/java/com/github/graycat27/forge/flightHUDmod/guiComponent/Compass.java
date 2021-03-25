@@ -3,11 +3,14 @@ package com.github.graycat27.forge.flightHUDmod.guiComponent;
 import com.github.graycat27.forge.flightHUDmod.consts.CompassScaleValue;
 import com.github.graycat27.forge.flightHUDmod.consts.DirectionValue;
 import com.github.graycat27.forge.flightHUDmod.consts.TextHorizontalPosition;
+import com.github.graycat27.forge.flightHUDmod.consts.TextRenderType;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+
+import javax.xml.soap.Text;
 
 import static com.github.graycat27.forge.flightHUDmod.FlightHUDMod.modSettings;
 
@@ -44,7 +47,8 @@ public class Compass extends GuiComponent {
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
-        degreesDisplay = new TextDisplay(centerPosX, posY + 2*height, width, height, isVisible, text, hPos);
+        TextRenderType rTy = TextRenderType.OUTLINE;
+        degreesDisplay = new TextDisplay(centerPosX, posY + 2*height, width, height, isVisible, text, hPos, rTy);
 
         //scale
         scaleDisplayList = new ArrayList<>();
@@ -61,12 +65,14 @@ public class Compass extends GuiComponent {
         }
         text = scaleBuilder.toString();
         width = mc.fontRenderer.getStringWidth(text);
-        scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos));
+        rTy = TextRenderType.NORMAL;
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos, rTy));
 
         //中心マーク
         text = "‡";
         width = mc.fontRenderer.getStringWidth(text);
-        scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos));
+        rTy = TextRenderType.SHADOW;
+        scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos, rTy));
 
         if(direction != null) {
             final double leftDirection = direction.value() - widthDgr / 2.0;
@@ -80,36 +86,42 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
-                            width, height, isVisible, text, hPos));
+                            width, height, isVisible, text, hPos, rTy));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                            width, height, isVisible, text, hPos));
+                            width, height, isVisible, text, hPos, rTy));
                     continue;
                 }
                 if(leftDirection - Direction.ROUND <= v.value() && v.value() < rightDirection - Direction.ROUND){
                     int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
-                            width, height, isVisible, text, hPos));
+                            width, height, isVisible, text, hPos, rTy));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                            width, height, isVisible, text, hPos));
+                            width, height, isVisible, text, hPos, rTy));
                     continue;
                 }
                 if(leftDirection + Direction.ROUND <= v.value() && v.value() < rightDirection + Direction.ROUND){
                     int deltaX = (int)((v.value() - direction.value() - Direction.ROUND) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
-                            width, height, isVisible, text, hPos));
+                            width, height, isVisible, text, hPos, rTy));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
-                            width, height, isVisible, text, hPos));
+                            width, height, isVisible, text, hPos, rTy));
                     continue;
                 }
             }
