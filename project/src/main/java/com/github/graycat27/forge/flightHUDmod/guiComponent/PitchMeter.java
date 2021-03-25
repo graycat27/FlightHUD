@@ -192,7 +192,7 @@ public class PitchMeter extends GuiComponent {
         pitch = new Pitch(player);
 
         initDisplayComponent();
-        String val = String.format(" %s -", pitch.valToString());
+        String val = String.format(" %s", pitch.valToString());
         pitchTextDisplay.setDispValue(val);
         centerMarkTextDisplay.setDispValue(Line.mark);
     }
