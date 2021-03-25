@@ -1,6 +1,7 @@
 package com.github.graycat27.forge.flightHUDmod.guiComponent;
 
 import com.github.graycat27.forge.flightHUDmod.consts.TextHorizontalPosition;
+import com.github.graycat27.forge.flightHUDmod.consts.TextRenderType;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Height;
@@ -35,7 +36,8 @@ public class HeightMeter extends GuiComponent  {
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
-        textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos);
+        TextRenderType renderType = TextRenderType.OUTLINE;
+        textDisplay = new TextDisplay(posX, posY, width, height, isVisible, text, hPos, renderType);
     }
 
     @Override

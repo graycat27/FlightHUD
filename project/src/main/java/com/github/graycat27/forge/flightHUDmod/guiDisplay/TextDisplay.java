@@ -2,8 +2,10 @@ package com.github.graycat27.forge.flightHUDmod.guiDisplay;
 
 import com.github.graycat27.forge.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.forge.flightHUDmod.consts.TextHorizontalPosition;
+import com.github.graycat27.forge.flightHUDmod.consts.TextRenderType;
 import com.github.graycat27.forge.flightHUDmod.setting.GuiColor;
 
+import com.github.graycat27.forge.flightHUDmod.util.TextRenderUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -16,18 +18,23 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
     /** 禁止パターン 改行を含む場合 */
     private static final Pattern denyPattern = Pattern.compile(".*\\R.*");
     private final TextHorizontalPosition hPos;
+    private final TextRenderType renderType;
 
     public TextDisplay(int posX, int posY, int width, int height, boolean isVisible,
-                       String text, TextHorizontalPosition hPos){
+                       String text, TextHorizontalPosition hPos, TextRenderType renderType){
         super(posX, posY, width, height, isVisible);
         if(hPos == null){
             throw new IllegalArgumentException("TextDisplay constructor param was null : hPos");
         }
+        if(renderType == null){
+            throw new IllegalArgumentException("TextDisplay constructor param was null : renderType");
+        }
         this.hPos = hPos;
+        this.renderType = renderType;
         setDispValue(text);
     }
     public TextDisplay(int posX, int posY, int width, int height, boolean isVisible,
-                       String text, TextHorizontalPosition hPos, GuiColor color){
+                       String text, TextHorizontalPosition hPos, TextRenderType renderType, GuiColor color){
         super(posX, posY, width, height, isVisible, color);
         if(hPos == null){
             throw new IllegalArgumentException("TextDisplay constructor param was null : hPos");
@@ -35,7 +42,11 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
         if(color == null){
             throw new IllegalArgumentException("TextDisplay constructor param was null : color");
         }
+        if(renderType == null){
+            throw new IllegalArgumentException("TextDisplay constructor param was null : renderType");
+        }
         this.hPos = hPos;
+        this.renderType = renderType;
         setDispValue(text);
     }
 
@@ -90,8 +101,16 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
                 break;
         }
 
-        Minecraft.getInstance().fontRenderer.drawStringWithShadow(new MatrixStack(),
-                getDispValue(), fixPosX, fixPosY, getColor().getInt());
+        switch (renderType){
+            case SHADOW:
+                TextRenderUtil.drawStringWithShadow(getDispValue(), fixPosX, fixPosY, getColor());
+                break;
+            case OUTLINE:
+                TextRenderUtil.drawStringWithOutLine(getDispValue(), fixPosX, fixPosY, getColor(), GuiColor.BLACK);
+                break;
+            default:
+                TextRenderUtil.drawString(getDispValue(), fixPosX, fixPosY, getColor());
+        }
     }
 
     private boolean isAllowedPattern(String text){
@@ -106,7 +125,7 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
         TextDisplay obj = null;
         try{
             obj = new TextDisplay(getDispPosX(), getDispPosY(), getDispWidth(), getDispHeight(),
-                    isVisible(), getDispValue(), this.hPos, getColor());
+                    isVisible(), getDispValue(), this.hPos, this.renderType, getColor());
         }catch(IllegalArgumentException e){
             FlightHUDMod.getLogger().warn("couldn't make clone object", e);
         }

@@ -1,6 +1,7 @@
 package com.github.graycat27.forge.flightHUDmod.guiComponent;
 
 import com.github.graycat27.forge.flightHUDmod.consts.TextHorizontalPosition;
+import com.github.graycat27.forge.flightHUDmod.consts.TextRenderType;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Speed;
@@ -43,23 +44,24 @@ public class SpeedMeter extends GuiComponent {
         String unitText = "[m/s]";
         int unitWidth = mc.fontRenderer.getStringWidth(unitText);
         TextHorizontalPosition unitPos = TextHorizontalPosition.LEFT;
+        TextRenderType rTy = TextRenderType.OUTLINE;
 
         //init and display
-        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos);
-        speedUnitDisplay = new TextDisplay(posX - width, basePosY, unitWidth, height, isVisible, unitText, unitPos);
+        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos, rTy);
+        speedUnitDisplay = new TextDisplay(posX - width, basePosY, unitWidth, height, isVisible, unitText, unitPos, rTy);
 
         if(speed != null && speed.getVerticalSpeed() >= 0){
             //going UP
             verticalSpeedTextDisplay = new TextDisplay(posX, basePosY-height,
-                    width, height, isVisible, text, hPos);
+                    width, height, isVisible, text, hPos, rTy);
             actualSpeedTextDisplay = new TextDisplay(posX + width*2/3, basePosY - (int)(2.5*height),
-                    width, height, isVisible, text, hPos);
+                    width, height, isVisible, text, hPos, rTy);
         }else{
             //going DOWN
             verticalSpeedTextDisplay = new TextDisplay(posX, basePosY+height,
-                    width, height, isVisible, text, hPos);
+                    width, height, isVisible, text, hPos, rTy);
             actualSpeedTextDisplay = new TextDisplay(posX + width*2/3, basePosY + (int)(2.5*height),
-                    width, height, isVisible, text, hPos);
+                    width, height, isVisible, text, hPos, rTy);
         }
 
     }

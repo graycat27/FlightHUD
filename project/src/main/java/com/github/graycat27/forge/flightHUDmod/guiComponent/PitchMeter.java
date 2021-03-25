@@ -2,6 +2,7 @@ package com.github.graycat27.forge.flightHUDmod.guiComponent;
 
 import com.github.graycat27.forge.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.forge.flightHUDmod.consts.TextHorizontalPosition;
+import com.github.graycat27.forge.flightHUDmod.consts.TextRenderType;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Pitch;
@@ -60,13 +61,15 @@ public class PitchMeter extends GuiComponent {
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
-        pitchTextDisplay = new TextDisplay(posX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos);
+        TextRenderType rTy = TextRenderType.OUTLINE;
+        pitchTextDisplay = new TextDisplay(posX+markWidth, centerY, pitchWidth, height, isVisible, text, hPos, rTy);
         hPos = TextHorizontalPosition.CENTER;
-        centerMarkTextDisplay = new TextDisplay(posX, centerY, markWidth, height, isVisible, text, hPos);
+        centerMarkTextDisplay = new TextDisplay(posX, centerY, markWidth, height, isVisible, text, hPos, rTy);
 
         //each 15° display
         degreesMarkTextDisplays = new ArrayList<>();
         final double fov = mc.gameSettings.fov;
+        rTy = TextRenderType.SHADOW;
         if(pitch != null){
             //fov = windowHeight view angle
             int interval = modSettings.getInterval();
@@ -103,7 +106,7 @@ public class PitchMeter extends GuiComponent {
                     }
                     int width = mc.fontRenderer.getStringWidth(angleText);
                     IGuiValueDisplay angleDisplay = new TextDisplay(posX, dispPosY,
-                            width, height, isVisible, angleText, hPos);
+                            width, height, isVisible, angleText, hPos, rTy);
                     degreesMarkTextDisplays.add(angleDisplay);
 
                 }
@@ -143,8 +146,9 @@ public class PitchMeter extends GuiComponent {
                     getDgrString((int)flightDegrees) : getDgrStringDecimal1(flightDegrees);
             String flightPitchText = String.format("> %s <", flightPitch);
             int width = mc.fontRenderer.getStringWidth(flightPitchText);
+            rTy = TextRenderType.OUTLINE;
             speedPitchTextDisplay = new TextDisplay(posX, (int)(centerY - levelY),
-                    width, height, isVisible, flightPitchText, hPos);
+                    width, height, isVisible, flightPitchText, hPos, rTy);
         }
     }
 

@@ -8,6 +8,7 @@ public enum GuiColor {
     WHITE("FFFFFF"),
     RED("FF3030"),
     BLUE("00C0FF"),
+    BLACK("000000"),
 
 
     DEFAULT("00FF44");
