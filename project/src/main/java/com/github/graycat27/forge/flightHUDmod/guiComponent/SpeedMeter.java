@@ -44,11 +44,12 @@ public class SpeedMeter extends GuiComponent {
         String unitText = "[m/s]";
         int unitWidth = mc.fontRenderer.getStringWidth(unitText);
         TextHorizontalPosition unitPos = TextHorizontalPosition.LEFT;
-        TextRenderType rTy = TextRenderType.OUTLINE;
+        TextRenderType rTy = TextRenderType.SHADOW;
 
         //init and display
-        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos, rTy);
         speedUnitDisplay = new TextDisplay(posX - width, basePosY, unitWidth, height, isVisible, unitText, unitPos, rTy);
+        rTy = TextRenderType.OUTLINE;
+        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos, rTy);
 
         if(speed != null && speed.getVerticalSpeed() >= 0){
             //going UP

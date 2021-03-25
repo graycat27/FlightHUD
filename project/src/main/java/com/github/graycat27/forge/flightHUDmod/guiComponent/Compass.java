@@ -71,6 +71,7 @@ public class Compass extends GuiComponent {
         //中心マーク
         text = "‡";
         width = mc.fontRenderer.getStringWidth(text);
+        rTy = TextRenderType.SHADOW;
         scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos, rTy));
 
         if(direction != null) {
@@ -78,7 +79,6 @@ public class Compass extends GuiComponent {
             final double rightDirection = direction.value() + widthDgr / 2.0;
 
             final double pxParDgr = windowHeight / fov;
-            rTy = TextRenderType.OUTLINE;
 
             for (CompassScaleValue v : CompassScaleValue.values()) {
                 //表示不要な方角は生成しない
@@ -86,10 +86,12 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos, rTy));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos, rTy));
                     continue;
@@ -98,10 +100,12 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos, rTy));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos, rTy));
                     continue;
@@ -110,10 +114,12 @@ public class Compass extends GuiComponent {
                     int deltaX = (int)((v.value() - direction.value() - Direction.ROUND) * pxParDgr);
                     text = v.toString();
                     width = mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos, rTy));
                     text = "+";
                     width =mc.fontRenderer.getStringWidth(text);
+                    rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos, rTy));
                     continue;
