@@ -49,7 +49,7 @@ public class SpeedMeter extends GuiComponent {
         //init and display
         speedUnitDisplay = new TextDisplay(posX - width, basePosY, unitWidth, height, isVisible, unitText, unitPos, rTy);
         rTy = TextRenderType.OUTLINE;
-        horizonSpeedTextDisplay = new TextDisplay(posX + unitWidth, basePosY, width, height, isVisible, text, hPos, rTy);
+        horizonSpeedTextDisplay = new TextDisplay(posX + 1 + unitWidth, basePosY, width, height, isVisible, text, hPos, rTy);
 
         if(speed != null && speed.getVerticalSpeed() >= 0){
             //going UP
