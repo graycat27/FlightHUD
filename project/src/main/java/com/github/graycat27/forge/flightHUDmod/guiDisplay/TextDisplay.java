@@ -6,7 +6,6 @@ import com.github.graycat27.forge.flightHUDmod.consts.TextRenderType;
 import com.github.graycat27.forge.flightHUDmod.setting.GuiColor;
 
 import com.github.graycat27.forge.flightHUDmod.util.TextRenderUtil;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -117,7 +116,7 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
         return !denyPattern.matcher(text).matches();
     }
     private boolean isDisplayableWidth(String text){
-        return getDispWidth() >= Minecraft.getInstance().fontRenderer.getStringWidth(text);
+        return getDispWidth() >= Minecraft.getInstance().font.width(text);
     }
 
     @Override
@@ -135,13 +134,9 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
     @Override
     public boolean equals(Object other){
         try {
-            if(!super.equals(other)) {
+            if(!(other instanceof TextDisplay another)) {
                 return false;
             }
-            if(!(other instanceof TextDisplay)) {
-                return false;
-            }
-            TextDisplay another = (TextDisplay) other;
             if(!this.dispValue.equals(another.dispValue)) {
                 return false;
             }

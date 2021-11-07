@@ -1,7 +1,7 @@
 package com.github.graycat27.forge.flightHUDmod.unit;
 
 import com.github.graycat27.forge.flightHUDmod.consts.GuiTextFormat;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 
 public class Height implements IUnit {
 
@@ -12,12 +12,12 @@ public class Height implements IUnit {
     /** calc with val to real val */
     private final int DIGIT = 1_000;
 
-    public Height(final ClientPlayerEntity player){
+    public Height(final LocalPlayer player){
         if(player == null){
             throw new IllegalArgumentException("player is null", new NullPointerException());
         }
 
-        double posY = player.getPosY();
+        double posY = player.getY();
         posY *= DIGIT;
 
         if(posY < Integer.MIN_VALUE || Integer.MAX_VALUE < posY){

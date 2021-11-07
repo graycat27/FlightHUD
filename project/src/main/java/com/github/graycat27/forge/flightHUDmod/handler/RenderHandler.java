@@ -1,8 +1,8 @@
 package com.github.graycat27.forge.flightHUDmod.handler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,7 +27,7 @@ public class RenderHandler {
         }
 
         Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player =  mc.player;
+        LocalPlayer player =  mc.player;
         if(player == null){
             // 起動直後ワールド読み込み中に頻発
             // FlightHUDMod.getLogger().debug("object player is null");
@@ -36,10 +36,10 @@ public class RenderHandler {
 
         FlightHUDGUIController controller = FlightHUDMod.getGuiController();
 
-        if(mc.gameSettings.hideGUI || !modSettings.isShowHud()){
+        if(mc.options.hideGui || !modSettings.isShowHud()){
             return;
         }
-        Screen curScreen = mc.currentScreen;
+        Screen curScreen = mc.screen;
         if(curScreen != null && (curScreen.shouldCloseOnEsc() || curScreen.isPauseScreen())){
             //controller.hideAllComponent();
             return;
@@ -47,7 +47,7 @@ public class RenderHandler {
 
         if( player.isSpectator() ||
             (!player.isOnGround() && player.fallDistance > 1.25) || //滞空時。単純なジャンプ時の描画抑止
-            (player.getRidingEntity() != null) || player.isSwimming() || player.isElytraFlying()  //表示対象の条件
+            (player.getVehicle() != null) || player.isSwimming() || player.tryToStartFallFlying()  //表示対象の条件
         ){
             //render GUI components
             controller.showAllComponent();

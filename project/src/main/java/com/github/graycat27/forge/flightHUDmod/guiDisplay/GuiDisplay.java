@@ -3,8 +3,8 @@ package com.github.graycat27.forge.flightHUDmod.guiDisplay;
 
 import com.github.graycat27.forge.flightHUDmod.FlightHUDMod;
 import com.github.graycat27.forge.flightHUDmod.setting.GuiColor;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.util.StringUtils;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.util.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import java.util.List;
  * subclasses must override method "equals","clone"
  */
 //abstract public class GuiDisplay extends ForgeIngameGui implements IGuiDisplay {
-abstract public class GuiDisplay extends AbstractGui implements IGuiDisplay {
+abstract public class GuiDisplay extends GuiComponent implements IGuiDisplay {
 
     /** リソースフォルダパス */
     protected String resourcePath = "";
     protected String generateResourcePath(String fileName){
-        if(StringUtils.isNullOrEmpty(fileName)){
+        if(StringUtil.isNullOrEmpty(fileName)){
             String errMsg = "param 'fileName' was empty";
             FlightHUDMod.getLogger().warn(errMsg);
             throw new NullPointerException(errMsg);
@@ -138,10 +138,9 @@ abstract public class GuiDisplay extends AbstractGui implements IGuiDisplay {
     @Override
     public boolean equals(Object other){
         try {
-            if(!(other instanceof GuiDisplay)) {
+            if(!(other instanceof GuiDisplay another)) {
                 return false;
             }
-            GuiDisplay another = (GuiDisplay) other;
             if(this.getDispPosX() != another.getDispPosX() ||
                     this.getDispPosY() != another.getDispPosY() ||
                     this.getDispWidth() != another.getDispWidth() ||
