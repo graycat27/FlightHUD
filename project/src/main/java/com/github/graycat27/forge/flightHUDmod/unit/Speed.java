@@ -1,6 +1,6 @@
 package com.github.graycat27.forge.flightHUDmod.unit;
 
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 
 import static com.github.graycat27.forge.flightHUDmod.consts.GuiTextFormat.floatStr1f;
 
@@ -25,14 +25,14 @@ public class Speed implements IUnit {
      * @throws IllegalArgumentException playerがnullの場合 または、算出値が不正の場合。
      * 前者は原因にNullPointerExceptionを持つ
      */
-    public Speed(ClientPlayerEntity player){
+    public Speed(LocalPlayer player){
         if(player == null){
             throw new IllegalArgumentException("player is null", new NullPointerException());
         }
 
-        double deltaX = player.getPosX() - player.lastTickPosX;
-        double deltaZ = player.getPosZ() - player.lastTickPosZ;
-        double deltaY = player.getPosY() - player.lastTickPosY;
+        double deltaX = player.getDeltaMovement().x();
+        double deltaZ = player.getDeltaMovement().z();
+        double deltaY = player.getDeltaMovement().y();
 
         double horizonSpeed = calcSpeed(deltaX, deltaZ);
         double verticalSpeed = calcSpeed(deltaY);

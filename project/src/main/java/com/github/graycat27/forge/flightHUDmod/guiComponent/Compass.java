@@ -8,9 +8,7 @@ import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Direction;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-
-import javax.xml.soap.Text;
+import net.minecraft.client.player.LocalPlayer;
 
 import static com.github.graycat27.forge.flightHUDmod.FlightHUDMod.modSettings;
 
@@ -37,13 +35,13 @@ public class Compass extends GuiComponent {
 
     private void initDisplayComponent(){
         Minecraft mc = Minecraft.getInstance();
-        int windowWidth = mc.getMainWindow().getScaledWidth();
-        int windowHeight = mc.getMainWindow().getScaledHeight();
+        int windowWidth = mc.getWindow().getGuiScaledWidth();
+        int windowHeight = mc.getWindow().getGuiScaledHeight();
 
         final int centerPosX = windowWidth / 2;
         int posY = getDisplayPosY();
-        int width = mc.fontRenderer.getStringWidth("360");
-        int height = mc.fontRenderer.FONT_HEIGHT;
+        int width = mc.font.width("360");
+        int height = mc.font.lineHeight;
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.CENTER;
@@ -53,24 +51,24 @@ public class Compass extends GuiComponent {
         //scale
         scaleDisplayList = new ArrayList<>();
         int halfWidthPx = windowWidth / 2;
-        double fov = mc.gameSettings.fov;
+        double fov = mc.options.fov;
         int widthDgr = (int)Math.round(halfWidthPx * fov / windowHeight);   //画面の半分の幅に収まる視野角
 
         String bar = "-";
-        int charWidth = mc.fontRenderer.getStringWidth(bar);
+        int charWidth = mc.font.width(bar);
 
         StringBuilder scaleBuilder = new StringBuilder();
         for(int i = 0; i < halfWidthPx/charWidth; i++){
             scaleBuilder.append(bar);
         }
         text = scaleBuilder.toString();
-        width = mc.fontRenderer.getStringWidth(text);
+        width = mc.font.width(text);
         rTy = TextRenderType.NORMAL;
         scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos, rTy));
 
         //中心マーク
         text = "‡";
-        width = mc.fontRenderer.getStringWidth(text);
+        width = mc.font.width(text);
         rTy = TextRenderType.SHADOW;
         scaleDisplayList.add(new TextDisplay(centerPosX, posY+height, width, height, isVisible, text, hPos, rTy));
 
@@ -85,12 +83,12 @@ public class Compass extends GuiComponent {
                 if(leftDirection <= v.value() && v.value() <= rightDirection) {
                     int deltaX = (int)((v.value() - direction.value()) * pxParDgr);
                     text = v.toString();
-                    width = mc.fontRenderer.getStringWidth(text);
+                    width = mc.font.width(text);
                     rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos, rTy));
                     text = "+";
-                    width =mc.fontRenderer.getStringWidth(text);
+                    width =mc.font.width(text);
                     rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos, rTy));
@@ -99,12 +97,12 @@ public class Compass extends GuiComponent {
                 if(leftDirection - Direction.ROUND <= v.value() && v.value() < rightDirection - Direction.ROUND){
                     int deltaX = (int)((v.value() - direction.value() + Direction.ROUND) * pxParDgr);
                     text = v.toString();
-                    width = mc.fontRenderer.getStringWidth(text);
+                    width = mc.font.width(text);
                     rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos, rTy));
                     text = "+";
-                    width =mc.fontRenderer.getStringWidth(text);
+                    width =mc.font.width(text);
                     rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos, rTy));
@@ -113,12 +111,12 @@ public class Compass extends GuiComponent {
                 if(leftDirection + Direction.ROUND <= v.value() && v.value() < rightDirection + Direction.ROUND){
                     int deltaX = (int)((v.value() - direction.value() - Direction.ROUND) * pxParDgr);
                     text = v.toString();
-                    width = mc.fontRenderer.getStringWidth(text);
+                    width = mc.font.width(text);
                     rTy = TextRenderType.OUTLINE;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY,
                             width, height, isVisible, text, hPos, rTy));
                     text = "+";
-                    width =mc.fontRenderer.getStringWidth(text);
+                    width =mc.font.width(text);
                     rTy = TextRenderType.SHADOW;
                     scaleDisplayList.add(new TextDisplay(centerPosX + deltaX, posY + height,
                             width, height, isVisible, text, hPos, rTy));
@@ -135,7 +133,7 @@ public class Compass extends GuiComponent {
      * @return
      */
     public static int getDisplayPosY(){
-        return (int)(Minecraft.getInstance().getMainWindow().getScaledHeight() * modSettings.getPositionCompass());
+        return (int)(Minecraft.getInstance().getWindow().getGuiScaledHeight() * modSettings.getPositionCompass());
     }
 
     @Override
@@ -145,14 +143,14 @@ public class Compass extends GuiComponent {
 
     @Override
     public void update(){
-        ClientPlayerEntity player =  Minecraft.getInstance().player;
+        LocalPlayer player =  Minecraft.getInstance().player;
         if(player == null){
             return;
         }
 
         //プレイヤーの向いている方角を算出
         /* playerYaw = SOUTH(=0)を基準に右回りを正として、回転した角度分増減する */
-        float playerYaw = player.rotationYaw;
+        float playerYaw = player.getRotationVector().y;
         while(playerYaw < DirectionValue.SOUTH){
             playerYaw += Direction.ROUND;
         }

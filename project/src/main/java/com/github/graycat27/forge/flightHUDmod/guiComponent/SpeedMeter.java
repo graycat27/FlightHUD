@@ -6,7 +6,7 @@ import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 
 import static com.github.graycat27.forge.flightHUDmod.FlightHUDMod.modSettings;
 
@@ -30,19 +30,19 @@ public class SpeedMeter extends GuiComponent {
 
     private void initDisplayComponent(){
         Minecraft mc = Minecraft.getInstance();
-        int windowWidth = mc.getMainWindow().getScaledWidth();
-        int windowHeight = mc.getMainWindow().getScaledHeight();
+        int windowWidth = mc.getWindow().getGuiScaledWidth();
+        int windowHeight = mc.getWindow().getGuiScaledHeight();
 
         int posX = (int)(windowWidth * modSettings.getPositionSpeed());
         int basePosY = windowHeight / 2;
-        int width = mc.fontRenderer.getStringWidth("1,234.321");
-        int height = mc.fontRenderer.FONT_HEIGHT;
+        int width = mc.font.width("1,234.321");
+        int height = mc.font.lineHeight;
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.RIGHT;
 
         String unitText = "[m/s]";
-        int unitWidth = mc.fontRenderer.getStringWidth(unitText);
+        int unitWidth = mc.font.width(unitText);
         TextHorizontalPosition unitPos = TextHorizontalPosition.LEFT;
         TextRenderType rTy = TextRenderType.SHADOW;
 
@@ -77,7 +77,7 @@ public class SpeedMeter extends GuiComponent {
 
     @Override
     public void update() {
-        ClientPlayerEntity player = Minecraft.getInstance().player;
+        LocalPlayer player = Minecraft.getInstance().player;
         if(player == null){
             return;
         }

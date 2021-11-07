@@ -8,7 +8,7 @@ import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Pitch;
 import com.github.graycat27.forge.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +44,20 @@ public class PitchMeter extends GuiComponent {
 
     private void initDisplayComponent(){
         Minecraft mc = Minecraft.getInstance();
-        int windowWidth = mc.getMainWindow().getScaledWidth();
-        int windowHeight = mc.getMainWindow().getScaledHeight();
+        int windowWidth = mc.getWindow().getGuiScaledWidth();
+        int windowHeight = mc.getWindow().getGuiScaledHeight();
 
         /* このposYから3*heightはNG */
-        int denyPosYTop = Compass.getDisplayPosY() - mc.fontRenderer.FONT_HEIGHT/2;
-        int denyPosYBottom = denyPosYTop + 3*mc.fontRenderer.FONT_HEIGHT;
+        int denyPosYTop = Compass.getDisplayPosY() - mc.font.lineHeight/2;
+        int denyPosYBottom = denyPosYTop + 3*mc.font.lineHeight;
 
         int posX = (int)(windowWidth * modSettings.getPositionPitch());
         int centerY = windowHeight / 2;
 
         //center display
-        int pitchWidth = mc.fontRenderer.getStringWidth(String.format(Line.angleText, getDgrStringDecimal1(Pitch.UP)));
-        int markWidth = mc.fontRenderer.getStringWidth(Line.mark);
-        int height = mc.fontRenderer.FONT_HEIGHT;
+        int pitchWidth = mc.font.width(String.format(Line.angleText, getDgrStringDecimal1(Pitch.UP)));
+        int markWidth = mc.font.width(Line.mark);
+        int height = mc.font.lineHeight;
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
@@ -68,7 +68,7 @@ public class PitchMeter extends GuiComponent {
 
         //each 15° display
         degreesMarkTextDisplays = new ArrayList<>();
-        final double fov = mc.gameSettings.fov;
+        final double fov = mc.options.fov;
         rTy = TextRenderType.SHADOW;
         if(pitch != null){
             //fov = windowHeight view angle
@@ -104,7 +104,7 @@ public class PitchMeter extends GuiComponent {
                         angleText = angleText.substring(0, angleText.length()-2);
                         angleText += "   ";
                     }
-                    int width = mc.fontRenderer.getStringWidth(angleText);
+                    int width = mc.font.width(angleText);
                     IGuiValueDisplay angleDisplay = new TextDisplay(posX, dispPosY,
                             width, height, isVisible, angleText, hPos, rTy);
                     degreesMarkTextDisplays.add(angleDisplay);
@@ -145,7 +145,7 @@ public class PitchMeter extends GuiComponent {
             String flightPitch = (-0.1f < flightDegrees && flightDegrees < 0.1f) ?
                     getDgrString((int)flightDegrees) : getDgrStringDecimal1(flightDegrees);
             String flightPitchText = String.format("> %s <", flightPitch);
-            int width = mc.fontRenderer.getStringWidth(flightPitchText);
+            int width = mc.font.width(flightPitchText);
             rTy = TextRenderType.OUTLINE;
             speedPitchTextDisplay = new TextDisplay(posX, (int)(centerY - levelY),
                     width, height, isVisible, flightPitchText, hPos, rTy);
@@ -184,7 +184,7 @@ public class PitchMeter extends GuiComponent {
 
     @Override
     public void update() {
-        ClientPlayerEntity player = Minecraft.getInstance().player;
+        LocalPlayer player = Minecraft.getInstance().player;
         if(player == null){
             return;
         }

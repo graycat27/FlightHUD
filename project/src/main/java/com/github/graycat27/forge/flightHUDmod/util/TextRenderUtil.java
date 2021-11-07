@@ -1,21 +1,21 @@
 package com.github.graycat27.forge.flightHUDmod.util;
 
 import com.github.graycat27.forge.flightHUDmod.setting.GuiColor;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 
 public class TextRenderUtil {
 
     private static Minecraft mc = Minecraft.getInstance();
-    private static FontRenderer fRnd = mc.fontRenderer;
+    private static Font fRnd = mc.font;
 
     public static void drawString(String text, int posX, int posY, GuiColor color){
-        fRnd.drawString(new MatrixStack(), text, (float)posX, (float)posY, color.getInt());
+        fRnd.draw(new PoseStack(), text, (float)posX, (float)posY, color.getInt());
     }
 
     public static void drawStringWithShadow(String text, int posX, int posY, GuiColor color){
-        fRnd.drawStringWithShadow(new MatrixStack(), text, (float)posX, (float)posY, color.getInt());
+        fRnd.drawShadow(new PoseStack(), text, (float)posX, (float)posY, color.getInt());
     }
 
     public static void drawStringWithOutLine(String text, int posX, int posY, GuiColor foreColor, GuiColor backColor){

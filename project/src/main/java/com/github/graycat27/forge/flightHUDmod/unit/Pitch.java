@@ -1,7 +1,8 @@
 package com.github.graycat27.forge.flightHUDmod.unit;
 
 import com.github.graycat27.forge.flightHUDmod.guiComponent.PitchMeter;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Direction;
 
 public class Pitch implements IUnit {
 
@@ -18,14 +19,14 @@ public class Pitch implements IUnit {
 
     /** コンストラクタ<br>
      * @throws IllegalArgumentException player must not be null. pitch must in -90 to 90 */
-    public Pitch(final ClientPlayerEntity player){
+    public Pitch(final LocalPlayer player){
         if(player == null){
             throw new IllegalArgumentException("player is null", new NullPointerException());
         }
 
         //プレイヤーの向いている仰俯角を算出
         /* playerPitch = LEVELを0として、下を正とした回転角度 */
-        float playerPitch = (-1)*player.rotationPitch;
+        float playerPitch = (float)(player.getLookAngle().get(Direction.Axis.Y)) * 90;
         if( playerPitch < DOWN || UP < playerPitch){
             //must between -90to90
             throw new IllegalArgumentException("direction must in -90to90 but was "+ pitch);

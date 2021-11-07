@@ -6,7 +6,7 @@ import com.github.graycat27.forge.flightHUDmod.guiDisplay.IGuiValueDisplay;
 import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Height;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.player.LocalPlayer;
 
 import static com.github.graycat27.forge.flightHUDmod.FlightHUDMod.modSettings;
 
@@ -26,13 +26,13 @@ public class HeightMeter extends GuiComponent  {
 
     private void initDisplayComponent(){
         Minecraft mc = Minecraft.getInstance();
-        int windowWidth = mc.getMainWindow().getScaledWidth();
-        int windowHeight = mc.getMainWindow().getScaledHeight();
+        int windowWidth = mc.getWindow().getGuiScaledWidth();
+        int windowHeight = mc.getWindow().getGuiScaledHeight();
 
         int posX = (int)(windowWidth * modSettings.getPositionHeight());
         int posY = windowHeight / 2;
-        int width = mc.fontRenderer.getStringWidth("12,345,678.123");
-        int height = mc.fontRenderer.FONT_HEIGHT;
+        int width = mc.font.width("12,345,678.123");
+        int height = mc.font.lineHeight;
         boolean isVisible = this.isDisplayed();
         String text = "";
         TextHorizontalPosition hPos = TextHorizontalPosition.LEFT;
@@ -47,7 +47,7 @@ public class HeightMeter extends GuiComponent  {
 
     @Override
     public void update() {
-        ClientPlayerEntity player = Minecraft.getInstance().player;
+        LocalPlayer player = Minecraft.getInstance().player;
         if(player == null){
             return;
         }

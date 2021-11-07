@@ -85,7 +85,7 @@ public class ModSettings {
     }
     /** only for constructor */
     private File getConfigFile(){
-        String configDir = Minecraft.getInstance().gameDir.getAbsolutePath() + ConfigFile.configDirName;
+        String configDir = Minecraft.getInstance().gameDirectory.getAbsolutePath() + ConfigFile.configDirName;
         File dir = new File(configDir);
         FlightHUDMod.getLogger().info("flightHudMod config directory is here: "+ dir.toString());
         dir.mkdirs();
