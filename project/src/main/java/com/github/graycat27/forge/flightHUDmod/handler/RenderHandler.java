@@ -47,7 +47,7 @@ public class RenderHandler {
 
         if( player.isSpectator() ||
             (!player.isOnGround() && player.fallDistance > 1.25) || //滞空時。単純なジャンプ時の描画抑止
-            (player.getVehicle() != null) || player.isSwimming() || player.tryToStartFallFlying()  //表示対象の条件
+            (player.getVehicle() != null) || player.isSwimming() || player.isFallFlying()  //表示対象の条件
         ){
             //render GUI components
             controller.showAllComponent();
