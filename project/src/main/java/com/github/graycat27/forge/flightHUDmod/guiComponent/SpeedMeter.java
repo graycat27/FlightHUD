@@ -7,6 +7,8 @@ import com.github.graycat27.forge.flightHUDmod.guiDisplay.TextDisplay;
 import com.github.graycat27.forge.flightHUDmod.unit.Speed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Position;
+import net.minecraft.core.PositionImpl;
 
 import static com.github.graycat27.forge.flightHUDmod.FlightHUDMod.modSettings;
 
@@ -23,9 +25,11 @@ public class SpeedMeter extends GuiComponent {
     private IGuiValueDisplay actualSpeedTextDisplay;
     private IGuiValueDisplay speedUnitDisplay;
 
+    private Position lastTickPlayerPos;
+
     public SpeedMeter(){
         super();
-        initDisplayComponent();
+        lastTickPlayerPos = null;
     }
 
     private void initDisplayComponent(){
@@ -81,9 +85,16 @@ public class SpeedMeter extends GuiComponent {
         if(player == null){
             return;
         }
+        if( lastTickPlayerPos != null &&
+            player.getX() == lastTickPlayerPos.x() &&
+            player.getY() == lastTickPlayerPos.y() &&
+            player.getZ() == lastTickPlayerPos.z()){
+            // do not update value when the position is same
+        }else {
 
-        speed = new Speed(player);
-
+            speed = new Speed(player, lastTickPlayerPos);
+            lastTickPlayerPos = new PositionImpl(player.getX(), player.getY(), player.getZ());
+        }
         initDisplayComponent();
         horizonSpeedTextDisplay.setDispValue(speed.getHorizonSpeedValStr() +"→");
         String verticalStr = speed.getVerticalSpeedValStr();
