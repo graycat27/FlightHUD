@@ -39,7 +39,7 @@ public class SpeedMeter extends GuiComponent {
 
         int posX = (int)(windowWidth * modSettings.getPositionSpeed());
         int basePosY = windowHeight / 2;
-        int width = mc.font.width("1,234.321");
+        int width = mc.font.width("123,456.321");
         int height = mc.font.lineHeight;
         boolean isVisible = this.isDisplayed();
         String text = "";
