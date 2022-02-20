@@ -72,7 +72,7 @@ public class TextDisplay extends GuiDisplay implements IGuiValueDisplay {
             throw new IllegalArgumentException("text must in one line");
         }
         if(!isDisplayableWidth(text)) {
-            throw new IllegalArgumentException("text is too long to display");
+            throw new IllegalArgumentException("text is too long to display : "+ text);
         }
 
         this.dispValue = text;
