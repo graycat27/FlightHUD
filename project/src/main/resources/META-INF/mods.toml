@@ -6,6 +6,7 @@ issueTrackerURL="https://github.com/graycat27/FlightHUD/issues"
 modId="flighthudmod"
 version="${file.jarVersion}"
 displayName="FlightHUD"
+updateJSONURL="https://raw.githubusercontent.com/graycat27/FlightHUD/forgeMaster/project/src/main/resources/version.json"
 credits="Have a nice flight"
 authors="gray27"
 description='''
