@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[39,)"
+loaderVersion="[40,)"
 license="(c)2021 gray27 All rights reserved"
 issueTrackerURL="https://github.com/graycat27/FlightHUD/issues"
 [[mods]]
@@ -14,12 +14,12 @@ description='''
 [[dependencies.flighthudmod]]
     modId="forge"
     mandatory=true
-    versionRange="[39,)"
+    versionRange="[40,)"
     ordering="NONE"
     side="CLIENT"
 [[dependencies.flighthudmod]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.1]"
+    versionRange="[1.18.2]"
     ordering="NONE"
     side="CLIENT"
