@@ -5,6 +5,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,7 +31,7 @@ public class KeyInputHandler {
      * key down handler
      */
     @SubscribeEvent
-    public static void keyInputHandler(RegisterKeyMappingsEvent event){
+    public static void keyInputHandler(InputEvent.Key event){
 
         Minecraft mc = Minecraft.getInstance();
         if(mc.screen != null && mc.screen.shouldCloseOnEsc()){
