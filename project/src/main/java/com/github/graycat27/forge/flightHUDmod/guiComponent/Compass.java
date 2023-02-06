@@ -51,7 +51,7 @@ public class Compass extends GuiComponent {
         //scale
         scaleDisplayList = new ArrayList<>();
         int halfWidthPx = windowWidth / 2;
-        double fov = mc.options.fov;
+        double fov = mc.options.fov().get();
         int widthDgr = (int)Math.round(halfWidthPx * fov / windowHeight);   //画面の半分の幅に収まる視野角
 
         String bar = "-";

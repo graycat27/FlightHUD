@@ -68,7 +68,7 @@ public class PitchMeter extends GuiComponent {
 
         //each 15° display
         degreesMarkTextDisplays = new ArrayList<>();
-        final double fov = mc.options.fov;
+        final double fov = mc.options.fov().get();
         rTy = TextRenderType.SHADOW;
         if(pitch != null){
             //fov = windowHeight view angle
